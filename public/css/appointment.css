@@ -1,0 +1,25 @@
+#appointments-container {
+    padding: 20px;
+}
+
+.appointment {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.appointment h2 {
+    margin: 0;
+    color: #333;
+}
+
+.appointment p {
+    margin: 5px 0;
+    color: #555;
+}
+
+hr {
+    margin-top: 10px;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
