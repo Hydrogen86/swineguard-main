@@ -9,10 +9,40 @@
 </head>
 <body>
     <h1>Appointment Requests</h1>
+    <select name="" id="appointment-filter">
+        <option value="">All</option>
+        <option value="completed">Completed</option>
+        <option value="accepted">Accepted</option>
+        <option value="reschedule">Reschedule</option>
+        <option value="rejected">Reject</option>
+        <option value="noStatus">No Status</option>
+    </select>
     <div id="appointments-container">
         <!-- Appointments will be dynamically inserted here -->
     </div>
+    <!-------Pop Up Container------->
+    <div class="pop-up-container hide" id="setSchedule-container">
+        <form>
+            <h2>Appointment Schedule</h2>
 
+            <label for="date-send">Date send</label><br>
+            <input type="text" id="date-send" value="" readonly><br>
+
+            <label for="set-schedule">Set Schedule</label><br>
+            <input type="date" id="set-schedule" required><br>
+            <label for="set-time">Set Time</label><br>
+            <input type="time" id="set-time" required>
+            <a href="#" class="check-sched">Check Schedules</a>
+
+            <div class="btn-box">
+                <button type="submit">Save</button>
+                <button type="button" class="cancel-edit-btn" id="cancel-edit-btn">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/admin/displayAppointment.js"></script> <!-- External JS file -->
+    <script src="./js/admin/updateAppointment.js"></script> 
 </body>
 </html>

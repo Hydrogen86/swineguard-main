@@ -1,5 +1,5 @@
 const express = require('express');
-const path = require('path'); // ✅ Add this line
+const path = require('path'); 
 
 require('module-alias/register');
 const connectionDB = require('@config/db');
@@ -13,6 +13,9 @@ connectionDB();
 // Enable CORS for all routes
 app.use(cors());
 
+// Parse JSON request bodies
+app.use(express.json());
+
 // Serve static files (HTML, CSS, JS) from the public folder
 app.use(express.static(path.join(__dirname, './public')));
 
@@ -21,9 +24,9 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'src/views/admin/adminHomepage.html'));
 });
 
-// Routes
-const appointmentsRoute = require("./src/routes/admin/getAppointmentRoutes");
+// ✅ Use the combined appointment routes (GET, PUT, etc.)
+const appointmentsRoute = require("./src/routes/admin/appointmentRoutes");
 app.use('/api', appointmentsRoute);
 
 const PORT = 5000;
-app.listen(PORT, () => console.log(`Server is running on port http://${PORT}`));
+app.listen(PORT, () => console.log(`Server is running on port http://localhost:${PORT}`));
