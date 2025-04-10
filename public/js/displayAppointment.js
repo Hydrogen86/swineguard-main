@@ -113,7 +113,7 @@ if (cancelBtn) {
   });
 }
 
-//Function marking the appointment as rejected:
+//Function marking the appointment as reschedule:
 function rejectAppointment (appointmentId) {
   fetch(`http://localhost:5000/api/appointments/${appointmentId}`, {
         method: 'PUT',

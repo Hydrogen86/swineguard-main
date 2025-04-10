@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const appointmentController = require('../../controllers/admin/appointmentControllers');
+const appointmentController = require('../../src/controllers/appointmentControllers');
 
 // @route   GET /api/appointments
 // @desc    Get all appointment records
@@ -16,7 +16,7 @@ router.put('/appointments/:id', appointmentController.rejectAppointments);
 
 // Serve admin homepage HTML
 router.get('/adminHomepage', (req, res) => {
-    res.sendFile(path.join(__dirname, '../views/admin/adminHomepage.html'));
+    res.sendFile(path.join(__dirname, '../../public/adminHomepage.html'));
 });
 
 module.exports = router;

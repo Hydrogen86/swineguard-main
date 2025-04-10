@@ -21,11 +21,11 @@ app.use(express.static(path.join(__dirname, './public')));
 
 // // 🔹 Serve index.html when accessing the root URL
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src/views/admin/adminHomepage.html'));
+    res.sendFile(path.join(__dirname, 'src/views/adminHomepage.html'));
 });
 
 // ✅ Use the combined appointment routes (GET, PUT, etc.)
-const appointmentsRoute = require("./src/routes/admin/appointmentRoutes");
+const appointmentsRoute = require("./src/routes/appointmentRoutes");
 app.use('/api', appointmentsRoute);
 
 const PORT = 5000;
