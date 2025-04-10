@@ -121,26 +121,26 @@ function rejectAppointment (appointmentId) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            appointmentStatus: 'rejected'
+            appointmentStatus: 'reschedule'
         })
     })
     .then(res => res.json())
     .then(data => {
         Swal.fire({
             icon: 'success',
-            title: 'Appointment Rejected',
-            text: 'Appointment reject successfully!',
+            title: 'Appointment Reschedule',
+            text: 'Appointment reschedule successfully!',
           }).then(() => {
             window.location.reload(); // Reload the page
           });
 
     })
     .catch(err => {
-        console.error("Error rejecting appointment:", err);
+        console.error("Error rescheduling appointment:", err);
         Swal.fire({
             icon: 'error',
-            title: 'Appointment Reject',
-            text: 'Appointment rejecting Failed!',
+            title: 'Appointment Reschedule',
+            text: 'Appointment reschedule Failed!',
           });
     });
 

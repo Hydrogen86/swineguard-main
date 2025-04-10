@@ -28,7 +28,7 @@ exports.updateAppointments = async (req, res) => {
     }
 }
 
-//Update appointment by Id and mark as rejected
+//Update appointment by Id and mark as reschedule
 exports.rejectAppointments = async (re, res) => {
     try {
         const { appointmentStatus } = req.body;
@@ -39,7 +39,7 @@ exports.rejectAppointments = async (re, res) => {
         );
         res.status(200).json(update);
     } catch (err) {
-        console.error("Error rejecting appointment", err);
-        res.status(500).json({error: "Failed to reject appointment"});
+        console.error("Error reschedule appointment", err);
+        res.status(500).json({error: "Failed to reschedule appointment"});
     }
 }
