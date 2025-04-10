@@ -25,7 +25,6 @@ fetch('http://localhost:5000/api/appointments')
         <select class="appointment-option">
             <option value="">Action</option>
             <option value="ongoing">Accept</option>
-            <option value="reject">Reject</option>
             <option value="reschedule">Reschedule</option>
             <option value="remove">Remove</option>
         </select>
@@ -75,20 +74,11 @@ fetch('http://localhost:5000/api/appointments')
         if (dropdown.value === 'ongoing') {
           showPopUp(); // Call the same function to show the popup
         }
-        else if (dropdown.value === 'reject') {
-            Swal.fire({
-              title: 'Are you sure?',
-              text: 'Do you really want to reject this appointment?',
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#d33',
-              cancelButtonColor: '#3085d6',
-              confirmButtonText: 'Yes, reject it!',
-              cancelButtonText: 'No, keep it'
-          }).then((result) => {
-              if (result.isConfirmed) { rejectAppointment(appointmentId); } 
-              else { dropdown.value = ''; }
-          });
+        else if (dropdown.value === 'reschedule') {
+            alertMsg(appointmentId, 'reschedule', dropdown)
+        }
+        else if (dropdown.value === 'remove') {
+            alertMsg(appointmentId, 'removed', dropdown)
         }
       });
 
@@ -114,22 +104,22 @@ if (cancelBtn) {
 }
 
 //Function marking the appointment as reschedule:
-function rejectAppointment (appointmentId) {
+function updateActionAppointment (appointmentId, action) {
   fetch(`http://localhost:5000/api/appointments/${appointmentId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            appointmentStatus: 'reschedule'
+            appointmentStatus: action
         })
     })
     .then(res => res.json())
     .then(data => {
         Swal.fire({
             icon: 'success',
-            title: 'Appointment Reschedule',
-            text: 'Appointment reschedule successfully!',
+            title: `Appointment ${action}`,
+            text: `Appointment ${action} successfully!`,
           }).then(() => {
             window.location.reload(); // Reload the page
           });
@@ -143,5 +133,22 @@ function rejectAppointment (appointmentId) {
             text: 'Appointment reschedule Failed!',
           });
     });
+}
 
+//SweetAlert and Function submitting actions
+function alertMsg (appointmentId, updateAction, dropdown) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: `Do you really want to ${updateAction} this appointment?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: `Yes, ${updateAction} it!`,
+    cancelButtonText: 'No, keep it'
+  }).then((result) => {
+      const action = updateAction;
+      if (result.isConfirmed) { updateActionAppointment(appointmentId, action); } 
+      else { dropdown.value = ''; }
+  });
 }

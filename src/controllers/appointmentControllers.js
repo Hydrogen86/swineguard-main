@@ -29,7 +29,7 @@ exports.updateAppointments = async (req, res) => {
 }
 
 //Update appointment by Id and mark as reschedule
-exports.rejectAppointments = async (re, res) => {
+exports.rescheduleAppointments = async (re, res) => {
     try {
         const { appointmentStatus } = req.body;
         const update = await appointmentRequest.findByIdAndUpdate(
@@ -41,5 +41,20 @@ exports.rejectAppointments = async (re, res) => {
     } catch (err) {
         console.error("Error reschedule appointment", err);
         res.status(500).json({error: "Failed to reschedule appointment"});
+    }
+}
+//Update appointment by Id and mark as removed
+exports.removeAppointments = async (re, res) => {
+    try {
+        const { appointmentStatus } = req.body;
+        const update = await appointmentRequest.findByIdAndUpdate(
+            req.params.id,
+            { appointmentStatus },
+            { new: true }
+        );
+        res.status(200).json(update);
+    } catch (err) {
+        console.error("Error removing appointment", err);
+        res.status(500).json({error: "Failed to remove appointment"});
     }
 }

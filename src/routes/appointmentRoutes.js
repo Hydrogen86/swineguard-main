@@ -12,7 +12,8 @@ router.get('/appointments', appointmentController.getAllAppointments);
 
 //update appointments by Id completed, accepted, rejected and removed
 router.put('/appointments/:id', appointmentController.updateAppointments);
-router.put('/appointments/:id', appointmentController.rejectAppointments);
+router.put('/appointments/:id', appointmentController.rescheduleAppointments);
+router.put('/appointments/:id', appointmentController.removeAppointments);
 
 // Serve admin homepage HTML
 router.get('/adminHomepage', (req, res) => {
