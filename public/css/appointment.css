@@ -67,10 +67,8 @@ hr {
 .pop-up-container label{
     font-weight: 600;
 }
-.btn-box {
-    margin-top: .5rem;
-}
 button {
+    margin-top: .5rem;
     cursor: pointer;
 }
 
