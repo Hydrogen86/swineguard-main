@@ -21,20 +21,24 @@ fetch('http://localhost:5000/api/appointments')
       appointmentDiv.setAttribute('data-id', appointment._id); // Add an ID attribute to each appointment
 
       appointmentDiv.innerHTML = `
-        <h2>${appointment.appointmentTitle}</h2>
         <select class="appointment-option">
             <option value="">Action</option>
             <option value="ongoing">Accept</option>
             <option value="reschedule">Reschedule</option>
             <option value="remove">Remove</option>
         </select>
-        <p><strong>Swine Type:</strong> ${appointment.swineType}</p>
+        <p  class="capitalized"><strong>Swine Type:</strong> ${appointment.appointmentTitle}</p>
+        <p  class="capitalized"><strong>Swine Type:</strong> ${appointment.swineType}</p>
         <p><strong>Swine Count:</strong> ${appointment.swineCount}</p>
         <p><strong>Date:</strong> ${appointment.appointmentDate}</p>
-        <p><strong>Time:</strong> ${appointment.appointmentTime}</p>
+        <p><strong>Time:</strong> ${formatTimeWithAMPM(appointment.appointmentTime)}</p>
+        <p><strong>Symptoms:</strong> ${appointment.swineSymptoms} months</p>
+        <p><strong>Age:</strong> ${appointment.swineAge} months</p>
+        <p><strong>Male:</strong> ${appointment.swineMale}</p>
+        <p><strong>Female:</strong> ${appointment.swineFemale}</p>
         <p><strong>Status:</strong> ${appointment.appointmentStatus}</p>
         <p><strong>Municipality:</strong> ${appointment.municipality}</p>
-        <p><strong>Barangay:</strong> ${appointment.barangay}</p>
+        <p  class="capitalized"><strong>Barangay:</strong> ${appointment.barangay}</p>
         <p><strong>Client Name:</strong> ${appointment.clientName}</p>
         <p><strong>Contact:</strong> ${appointment.clientContact}</p>
         <p><strong>Email:</strong> ${appointment.clientEmail}</p>

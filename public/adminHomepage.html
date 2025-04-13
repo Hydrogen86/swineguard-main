@@ -45,16 +45,34 @@
 
     <!--Add Appointment for walk-ins-->
     <div class="add-appointment">
+
+        <!-- Client Information -->
         <form>
-            <p>Full name:</p>
-            <input type="text" id="first-name" placeholder="First name" required>
-            <input type="text" id="middle-name" placeholder="Middle name">
-            <input type="text" id="last-name" placeholder="Last name" required><br>
+            <h2>Add Appointment</h2>
+            <input type="text" id="full-name" placeholder="Full name" required>
+            <!-- Municipality -->
+            <select name="" id="municipality">
+                <option value="">Municipality</option>
+                <option value="Boac">Boac</option>
+                <option value="Gasan">Gasan</option>
+                <option value="Mogpog">Mogpog</option>
+                <option value="SantaCruz">Sta Cruz</option>
+                <option value="Torrijos">Torrijos</option>
+                <option value="Buenavista">Buenavista</option>
+            </select>
+            <!-- Barangay -->
+            <select name="" id="barangay">
+                <option value="">Barangay</option>
+            </select>
+            <br>
+            <input type="email" id="client-email" placeholder="Email" required>
+            <input type="number" id="client-phone" placeholder="Phone" required>
         </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/displayAppointment.js"></script> <!-- External JS file -->
     <script src="./js/updateAppointment.js"></script> 
+    <script src="./js/addAppointments.js"></script> 
 </body>
 </html>

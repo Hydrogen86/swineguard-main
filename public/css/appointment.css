@@ -11,12 +11,16 @@
 .appointment h2 {
     margin: 0;
     color: #333;
-    text-transform: capitalize;
+    
 }
 
 .appointment p {
     margin: 5px 0;
-    color: #555;
+    color: #313131;
+    
+}
+.capitalized {
+    text-transform: capitalize;
 }
 
 hr {

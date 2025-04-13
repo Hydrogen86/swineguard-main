@@ -1,0 +1,5 @@
+{
+    "SwineType" : {
+        "swines" : [ "Piglet", "Sow", "Gilt", "Boar", "Barrow" ]
+    }
+}
