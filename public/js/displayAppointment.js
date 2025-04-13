@@ -38,7 +38,7 @@ fetch('http://localhost:5000/api/appointments')
         <p><strong>Female:</strong> ${appointment.swineFemale}</p>
         <p><strong>Status:</strong> ${appointment.appointmentStatus}</p>
         <p><strong>Municipality:</strong> ${appointment.municipality}</p>
-        <p  class="capitalized"><strong>Barangay:</strong> ${appointment.barangay}</p>
+        <p><strong>Barangay:</strong> ${appointment.barangay}</p>
         <p><strong>Client Name:</strong> ${appointment.clientName}</p>
         <p><strong>Contact:</strong> ${appointment.clientContact}</p>
         <p><strong>Email:</strong> ${appointment.clientEmail}</p>
