@@ -5,6 +5,10 @@ popupForm.addEventListener('submit', function (e) {
 
     const dateInput = document.getElementById('set-schedule').value;
     const timeInput = document.getElementById('set-time').value;
+    const medAmount = document.getElementById('med-amount').value;
+    const vetMedicine = document.getElementById('medicine-list').value;
+    const personnel = document.getElementById('vet-personnel').value;
+    const messages = document.getElementById('vet-message').value;
     const appointmentId = document.getElementById('set-schedule').dataset.appointmentId;
 
     if (!dateInput || !timeInput) {
@@ -12,7 +16,7 @@ popupForm.addEventListener('submit', function (e) {
         return;
     }
 
-    fetch(`http://localhost:5000/api/appointments/${appointmentId}`, {
+    fetch(`http://localhost:5000/api/appointments/${appointmentId}/update`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -20,6 +24,10 @@ popupForm.addEventListener('submit', function (e) {
         body: JSON.stringify({
             appointmentDate: dateInput,
             appointmentTime: timeInput,
+            vetPersonnel: personnel,
+            medicine: vetMedicine,
+            dosage: medAmount,
+            vetMessage: messages,
             appointmentStatus: 'ongoing' // Optional: mark as ongoing
         })
     })

@@ -5,19 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Homepage</title>
     <link rel="stylesheet" href="./css/appointment.css">
+    <link rel="stylesheet" href="./css/addAppointment.css">
 
+    <style>
+        table {
+            border: 1px solid gray;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid gray;
+            padding: 8px;
+            margin-bottom: 1rem;
+        }
+        tfoot {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>Appointment Requests</h1>
     <select name="" id="appointment-filter">
         <option value="">All</option>
         <option value="completed">Completed</option>
-        <option value="accepted">Accepted</option>
+        <option value="ongoing">Accepted</option>
         <option value="reschedule">Reschedule</option>
-        <option value="rejected">Reject</option>
-        <option value="noStatus">No Status</option>
+        <option value="pending">Pending</option>
+        <option value="remove">Removed</option>
     </select><br>
-    <button id="add-appointment">Add Appointment</button>
+
+    <button id="add-appointment-btn">Add Appointment</button>
+
     <div id="appointments-container">
         <!-- Appointments will be dynamically inserted here -->
     </div>
@@ -30,10 +48,26 @@
             <label for="date-send">Date send</label><br>
             <input type="text" id="date-send" value="" readonly><br>
 
+            <!-- Dates -->
             <label for="set-schedule">Set Schedule</label><br>
             <input type="date" id="set-schedule" required><br>
             <label for="set-time">Set Time</label><br>
             <input type="time" id="set-time" required>
+
+            <!-- Vet Info -->
+            <label for="med-amount">Amount</label><br>
+            <input type="number" id="med-amount" min="0" placeholder="Amount/mg here." required>
+
+            <select name="" id="medicine-list">
+                <option value="">Medicine here.</option>
+            </select>
+            <select name="" id="vet-personnel">
+                <option value="">Personnel</option>
+            </select><br>
+
+            <label for="vet-message">Message</label><br>
+            <textarea name="" id="vet-message"></textarea><br>
+
             <a href="#" class="check-sched">Check Schedules</a>
 
             <div class="btn-box">
@@ -43,12 +77,36 @@
         </form>
     </div>
 
-    <!--Add Appointment for walk-ins-->
-    <div class="add-appointment">
+    <div class="modal-overlay hide" id="modal-overlay"></div>
 
-        <!-- Client Information -->
-        <form>
+    <!--Add Appointment for walk-ins-->
+    <div class="add-appointment hide" id="add-appointment">
+        <span id="cancel-btn">×</span>
+        <form id="add-appointments">
             <h2>Add Appointment</h2>
+            <!-- Swine Information -->
+            <h3>Swine Information</h3>
+
+            <select name="" id="appointment-title">
+                <option value="">Select Your Appointment</option>
+            </select>
+
+            <input type="date" id="appointment-date" required>
+            <input type="time" id="appointment-time" required><br>
+
+            <select name="" id="swine-type">
+                <option value="">Swine Type</option>
+            </select>
+
+            <input type="number" min="0" id="swine-count" placeholder="Heads" required>
+            <input type="number" min="0" id="swine-age" placeholder="Age/months" required><br>
+            <span>Swine Gender</span>
+            <input type="number" id="swine-female" placeholder="Female" required>
+            <input type="number" id="swine-male" placeholder="Male" required>
+            <textarea name="" id="swine-symptoms" placeholder="Write a note or swine symptoms..."></textarea><br><br>
+
+            <!-- Client Information -->
+            <h3>Client Information</h3>
             <input type="text" id="full-name" placeholder="Full name" required>
             <!-- Municipality -->
             <select name="" id="municipality">
@@ -65,14 +123,18 @@
                 <option value="">Barangay</option>
             </select>
             <br>
-            <input type="email" id="client-email" placeholder="Email" required>
-            <input type="number" id="client-phone" placeholder="Phone" required>
+            <input type="text" id="client-email" placeholder="Email">
+            <input type="number" id="client-phone" placeholder="Phone" required><br>
+
+            <button type="submit">Add Appointment</button>
+
         </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./js/displayAppointment.js"></script> <!-- External JS file -->
     <script src="./js/updateAppointment.js"></script> 
-    <script src="./js/addAppointments.js"></script> 
+    <script src="./js/data.js"></script> 
+    <script src="./js/addAppointment.js"></script> 
 </body>
 </html>
