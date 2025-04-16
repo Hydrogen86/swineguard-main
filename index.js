@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path'); 
 
 require('module-alias/register');
-const connectionDB = require('@config/db');
+const connectionDB = require('./src/config/db');
 const appointment = require('./src/models/appointment');
 const cors = require('cors');
 
@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, './public')));
 
 // // 🔹 Serve index.html when accessing the root URL
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src/views/adminHomepage.html'));
+    res.sendFile(path.join(__dirname, 'public/adminHomepage.html'));
 });
 
 // ✅ Use the combined appointment routes (GET, PUT, etc.)

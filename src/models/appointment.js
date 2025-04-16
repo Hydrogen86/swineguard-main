@@ -12,8 +12,8 @@ const appointmentSchema = new mongoose.Schema({
     swineMale: { type: String, required: true },
     swineFemale: { type: String, required: true },
 
-    municipality: { type: String, required: true },
-    barangay: { type: String, required: true },
+    municipality: { type: String,},
+    barangay: { type: String,},
 
     clientName: { type: String, required: true },
     clientContact: { type: String, required: true },

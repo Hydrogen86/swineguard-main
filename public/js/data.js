@@ -1,112 +1,109 @@
 
-document.addEventListener('DOMContentLoaded', () => {
-    const appointmentTitle = document.getElementById('appointment-title');
-    const swineType = document.getElementById('swine-type');
-    const medicineList = document.getElementById('medicine-list');
-    const personnelList = document.getElementById('vet-personnel');
-    const municipalitySelect = document.getElementById('municipality');
-    const barangaySelect = document.getElementById('barangay');
-    let barangayData = {};
+// document.addEventListener('DOMContentLoaded', () => {
+//     const appointmentTitle = document.getElementById('appointment-title');
+//     const swineType = document.getElementById('swine-type');
+//     const medicineList = document.getElementById('medicine-list');
+//     const personnelList = document.getElementById('vet-personnel');
+//     const municipalitySelect = document.getElementById('municipality');
+//     const barangaySelect = document.getElementById('barangay');
+//     let barangayData = {};
 
-    // Load barangays from external JSON file
-    fetch('http://localhost:5000/api/addresses')
-        .then(response => response.json())
-        .then(data => {
-            barangayData = data.Municipals;
-        })
-        .catch(error => {
-            console.error('Error loading barangay data:', error);
-        });
+//     // Load barangays from external JSON file
+//     fetch('http://localhost:5000/api/addresses')
+//       .then(response => response.json())
+//       .then(data => barangayData = data.Municipals)
+//       .catch(error => console.error('Error loading barangay data:', error));
 
-    municipalitySelect.addEventListener('change', () => {
-        const selectedMunicipality = municipalitySelect.value;
 
-        // Clear current barangay options
-        barangaySelect.innerHTML = '<option value="">Barangay</option>';
+//     municipalitySelect.addEventListener('change', () => {
+//         const selectedMunicipality = municipalitySelect.value;
 
-        if (barangayData[selectedMunicipality]) {
-            barangayData[selectedMunicipality].forEach(barangay => {
-                const option = document.createElement('option');
-                option.value = barangay;
-                option.textContent = barangay;
-                barangaySelect.appendChild(option);
-            });
-        }
-    });
+//         // Clear current barangay options
+//         barangaySelect.innerHTML = '<option value="">Barangay</option>';
 
-    //Load services from external JSON file
-    fetch ('http://localhost:5000/api/services')
-        .then(response => response.json())
-        .then(data => {
-            const services = data.Services.appointmentServices;
+//         if (barangayData[selectedMunicipality]) {
+//             barangayData[selectedMunicipality].forEach(barangay => {
+//                 const option = document.createElement('option');
+//                 option.value = barangay;
+//                 option.textContent = barangay;
+//                 barangaySelect.appendChild(option);
+//             });
+//         }
+//     });
 
-            appointmentTitle.innerHTML = '<option value="">Appointment Title</option>';
-            services.forEach(service => {
-                const option = document.createElement('option');
-                option.value = service;
-                option.textContent = service;
-                appointmentTitle.appendChild(option);
-            });
+//     //Load services from external JSON file
+//     fetch ('http://localhost:5000/api/services')
+//         .then(response => response.json())
+//         .then(data => {
+//             const services = data.Services.appointmentServices;
 
-        })
-        .catch(error => {
-            console.error('Error loading services data:', error);
-        });
+//             appointmentTitle.innerHTML = '<option value="">Appointment Title</option>';
+//             services.forEach(service => {
+//                 const option = document.createElement('option');
+//                 option.value = service;
+//                 option.textContent = service;
+//                 appointmentTitle.appendChild(option);
+//             });
 
-    //Load swine type from external JSON file
-    fetch ('http://localhost:5000/api/swines')
-        .then(response => response.json())
-        .then(data => {
-            const swineList = data.SwineType.swines;
+//         })
+//         .catch(error => {
+//             console.error('Error loading services data:', error);
+//         });
 
-            swineType.innerHTML = '<option value="">Swine Type</option>';
-            swineList.forEach(swine => {
-                const option = document.createElement('option');
-                option.value = swine;
-                option.textContent = swine;
-                swineType.appendChild(option);
-            });
+//     //Load swine type from external JSON file
+//     fetch ('http://localhost:5000/api/swines')
+//         .then(response => response.json())
+//         .then(data => {
+//             const swineList = data.SwineType.swines;
 
-        })
-        .catch(error => {
-            console.error('Error loading swine type data:', error);
-        });
+//             swineType.innerHTML = '<option value="">Swine Type</option>';
+//             swineList.forEach(swine => {
+//                 const option = document.createElement('option');
+//                 option.value = swine;
+//                 option.textContent = swine;
+//                 swineType.appendChild(option);
+//             });
 
-    //Load swine medicines from external JSON file
-    fetch ('http://localhost:5000/api/medicines')
-    .then(response => response.json())
-    .then(data => {
-        const medicines = data.Medicine.swineVaccines;
+//         })
+//         .catch(error => {
+//             console.error('Error loading swine type data:', error);
+//         });
 
-        medicineList.innerHTML = '<option value="">Medicine here.</option>';
-        medicines.forEach(meds => {
-            const option = document.createElement('option');
-            option.value = meds;
-            option.textContent = meds;
-            medicineList.appendChild(option);
-        });
+//     //Load swine medicines from external JSON file
+//     fetch ('http://localhost:5000/api/medicines')
+//     .then(response => response.json())
+//     .then(data => {
+//         const medicines = data.Medicine.swineVaccines;
 
-    })
-    .catch(error => {
-        console.error('Error loading swine type data:', error);
-    });
+//         medicineList.innerHTML = '<option value="">Medicine here.</option>';
+//         medicines.forEach(meds => {
+//             const option = document.createElement('option');
+//             option.value = meds;
+//             option.textContent = meds;
+//             medicineList.appendChild(option);
+//         });
 
-    //Load vet personnel from external JSON file
-    fetch ('http://localhost:5000/api/personnel')
-    .then(response => response.json())
-    .then(data => {
-        const personnels = data.Personnel.persons;
+//     })
+//     .catch(error => {
+//         console.error('Error loading swine type data:', error);
+//     });
 
-        personnelList.innerHTML = '<option value="">Personnel</option>';
-        personnels.forEach(person => {
-            const option = document.createElement('option');
-            option.value = person;
-            option.textContent = person;
-            personnelList.appendChild(option);
-        });
+//     //Load vet personnel from external JSON file
+//     fetch ('http://localhost:5000/api/personnel')
+//     .then(response => response.json())
+//     .then(data => {
+//         const personnels = data.Personnel.persons;
 
-    })
-    .catch(error => {
-        console.error('Error loading swine type data:', error);
-    });
-});
+//         personnelList.innerHTML = '<option value="">Personnel</option>';
+//         personnels.forEach(person => {
+//             const option = document.createElement('option');
+//             option.value = person;
+//             option.textContent = person;
+//             personnelList.appendChild(option);
+//         });
+
+//     })
+//     .catch(error => {
+//         console.error('Error loading swine type data:', error);
+//     });
+// });
