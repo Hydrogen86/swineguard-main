@@ -1,80 +1,74 @@
-// document.getElementById('add-appointments').addEventListener('submit', async (event) => {
-//     event.preventDefault();
+// Open and Close addAppointment
+const addAppointmentContainer = document.querySelector('.add-appointment-container');
 
-    
-//     const swineMale = document.getElementById('swine-male').value;
-//     const swineFemale = document.getElementById('swine-female').value;
-//     const swineCount = document.getElementById('swine-count').value;
-//     const swineCountValidation = parseInt(swineCount) === (parseInt(swineMale) + parseInt(swineFemale)); //check id the input are valid
-//     const clientEmailInput = document.getElementById('client-email');
-//     const clientEmail = clientEmailInput.value.trim();
+document.querySelector('.add-appointment-btn').
+  addEventListener('click', () => addAppointmentContainer.style.display = 'block');
+document.querySelector('.cancel-add-appointment-btn').
+  addEventListener('click', () => addAppointmentContainer.style.display = 'none');
 
-//     try {
-//         if (!swineCountValidation) {
-//             showAlert("Swine Count Error", "Swine Count and gender are not equal", "error");
-//             return;
-//         }
-//         if (clientEmail === '') {
-//             clientEmailInput.value = 'No Email';
-//         }
-//         const appointmentData = {
-//             appointmentTitle: document.getElementById('appointment-title').value, 
-//             swineType: document.getElementById('swine-type').value, 
-//             swineCount: document.getElementById('swine-count').value, 
-//             appointmentDate: document.getElementById('appointment-date').value, 
-//             appointmentTime: document.getElementById('appointment-time').value, 
-//             swineSymptoms: document.getElementById('swine-symptoms').value, 
-//             swineAge: document.getElementById('swine-age').value, 
-//             swineMale: document.getElementById('swine-male').value, 
-//             swineFemale: document.getElementById('swine-female').value, 
-//             municipality: document.getElementById('municipality').value, 
-//             barangay: document.getElementById('barangay').value, 
-//             clientName: document.getElementById('full-name').value, 
-//             clientContact: document.getElementById('client-phone').value, 
-//             clientEmail: document.getElementById('client-email').value
-//         }
 
-//         const response = await fetch('http://localhost:5000/api/request/appointments', {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify(appointmentData)
-//         });
+//Show Alert Function
+function showAlert(title, message, icon) {
+  Swal.fire({
+      title: title,
+      text: message,
+      icon: icon
+  });
+}
 
-//         const result = await response.json();
 
-//         if (response.ok) {
-//             showAlert("Success", "Appointment Created", "success");//Successful Creation of Account
-//             document.getElementById('add-appointments').reset();
-//         } else {
-//             showAlert("Error", result.error || "Something went wrong", "error");
-//         }
+document.getElementById('add-appointments-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const swineMale = document.getElementById('swine-male').value;
+    const swineFemale = document.getElementById('swine-female').value;
+    const clientEmailInput = document.getElementById('client-email');
+    const clientEmail = clientEmailInput.value.trim();
+    const swineCount = document.getElementById('swine-count').value;
+    const swineCountValidation = parseInt(swineCount) === (parseInt(swineMale) + parseInt(swineFemale)); //check id the input are valid
+ 
+    try {
+        if (!swineCountValidation) {
+            showAlert("Swine Count Error", "Swine Count and gender are not equal", "error");
+            return;
+        }
+        if (clientEmail === '') clientEmailInput.value = 'No Email';
+        
 
-//     } catch (error) {
-//         console.error('Error', error);
-//         showAlert("Error", "Failed to create appointment", "error");
-//     }
-// });
+        const appointmentData = {
+            appointmentTitle: document.getElementById('appointment-title').value, 
+            swineType: document.getElementById('swine-type').value, 
+            swineCount: document.getElementById('swine-count').value, 
+            appointmentDate: document.getElementById('appointment-date').value, 
+            appointmentTime: document.getElementById('appointment-time').value, 
+            swineSymptoms: document.getElementById('swine-symptoms').value, 
+            swineAge: document.getElementById('swine-age').value, 
+            swineMale: document.getElementById('swine-male').value, 
+            swineFemale: document.getElementById('swine-female').value, 
+            municipality: document.getElementById('municipality').value, 
+            barangay: document.getElementById('barangay').value, 
+            clientName: document.getElementById('full-name').value, 
+            clientContact: document.getElementById('client-phone').value, 
+            clientEmail: document.getElementById('client-email').value
+        }
 
-// const modal = document.getElementById('add-appointment');
-// const overlay = document.getElementById('modal-overlay');
-// const openBtn = document.getElementById('add-appointment-btn');
-// const closeBtn = document.getElementById('cancel-btn');
+        const response = await fetch('http://localhost:5000/api/request/appointments', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(appointmentData)
+        });
 
-// openBtn.addEventListener('click', () => {
-//     modal.style.display = 'block';
-//     if (overlay) overlay.style.display = 'block';
-// });
+        const result = await response.json();
 
-// closeBtn.addEventListener('click', () => {
-//     modal.style.display = 'none';
-//     if (overlay) overlay.style.display = 'none';
-// });
+        if (response.ok) {
+            showAlert("Success", "Appointment Created", "success");//Successful Creation of Account
+            document.getElementById('add-appointments-form').reset();
+        } else {
+            showAlert("Error", result.error || "Something went wrong", "error");
+        }
+    } catch (error) {
+        console.error('Error', error);
+        showAlert("Error", "Failed to create appointment", "error");
+    }
+});
 
-// //Show Alert Function
-// function showAlert(title, message, icon) {
-//     Swal.fire({
-//         title: title,
-//         text: message,
-//         icon: icon
-//     });
-// }
+

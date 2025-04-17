@@ -78,7 +78,6 @@
         </ul>
       </nav>
     
-
       <!-- sections -->
       <div class="sections-wrapper">
         <section id="dashboard-section" class="dashboard-icon">No Content</section>
@@ -86,6 +85,7 @@
         <section id="messages-section">No Content</section>
         <section id="appointments-section" class="appointment-section">
           <h1 class="section__heading">Manage Appointmens</h1>
+          <!-- filter-appointment and add appointments buttons -->
           <div class="select-and-btn-container">
             <select class="select-and-btn-container__filter-apointments-status" name="" id="appointment-filter">
               <option value="">All</option>
@@ -94,7 +94,72 @@
               <option value="reschedule">Reschedule</option>
               <option value="pending">Pending</option>
             </select>
-            <button class="select-and-btn-container__add-appointment-btn">Add Appointment</button>
+            <button class="select-and-btn-container__add-appointment-btn add-appointment-btn">Add Appointment</button>
+          </div>
+          <!-- Add Appointments Form-->
+          <div class="add-appointment-container" id="add-appointment-container">
+            <img class="add-appointment-container__cancel-btn cancel-add-appointment-btn" src="images-and-icons/icons/cross-icon.png"></img>
+            <h2 class="add-appointment-container__heading">Add Appointment</h2>   
+            <!-- form -->   
+            <form class="add-appointments-form" id="add-appointments-form">
+              <h3 class="add-appointments-form__heading">Swine Information</h3>
+              <!-- appointment title, schedule and time group -->
+              <div class="group">
+                <select id="appointment-title" name="" >
+                  <option value="">Select Your Appointment</option>
+                  <option value="iron_supplementation">Iron Supplementation</option>
+                  <option value="deworming">Deworming</option>
+                  <option value="asf_testing">ASF Testing</option>
+                  <option value="blood_testing">Blood Testing</option>
+                  <option value="health_surveillance">Health Surveillance</option>
+                  <option value="postpartum_care">Postpartum Care</option>
+                  <option value="surgical_castration">Surgical Castration</option>
+                </select>
+                <input type="text" id="date" placeholder="Date" onfocus="(this.type='date')" onblur="if(!this.value)this.type='text'" />
+                <input type="text" id="time" placeholder="Time" onfocus="(this.type='time')" onblur="if(!this.value)this.type='text'" />
+              </div>
+              <!-- swine type, heads, age and gender group-->
+              <div class="group">
+                <select id="swine-type" name="" >
+                  <option value="">Swine Type</option>
+                  <option value="piglet">Piglet</option>
+                  <option value="sow">Sow</option>
+                  <option value="gilt">Gilt</option>
+                  <option value="boar">Boar</option>
+                  <option value="barrow">Barrow</option>                  
+                </select>
+                <input id="swine-count" type="number" min="0"  placeholder="Heads" required>
+                <input id="swine-age" type="number" min="0"  placeholder="Age/months" required><br>
+                <span>Swine Gender:</span>
+                <input  id="swine-female" type="number" placeholder="Female" required>
+                <input id="swine-male" type="number"  placeholder="Male" required>
+              </div>
+              <!-- textarea of swine symptoms message -->
+              <textarea class="swine-symptoms"  name="" id="swine-symptoms" placeholder="Write a note or swine symptoms..."></textarea>
+              <h3 class="add-appointments-form__heading">Client Information</h3>
+              <!-- fullname, municipality and barangay group -->
+              <div class="group">
+                <input id="full-name" type="text" placeholder="Full name" required>
+                <select id="municipality" name="">
+                  <option value="">Municipality</option>
+                  <option value="Boac">Boac</option>
+                  <option value="Gasan">Gasan</option>
+                  <option value="Mogpog">Mogpog</option>
+                  <option value="SantaCruz">Sta Cruz</option>
+                  <option value="Torrijos">Torrijos</option>
+                  <option value="Buenavista">Buenavista</option>
+                </select>
+                <select id="barangay" name="">
+                    <option value="">Barangay</option>
+                </select>
+              </div>
+              <!-- email and contact number group -->
+              <div class="group">
+                <input id="client-email" type="text" placeholder="Email">
+                <input id="client-phone" type="number"  placeholder="Phone" required><br>
+              </div>
+              <button class="submit-appointment-btn" type="submit">Add Appointment</button>
+            </form>
           </div>
 
           <!-- Appointment Table -->
@@ -108,7 +173,7 @@
               <p class="th toggle-more-details-btn "><!--View--></p> 
             </div>
             <div class="manage-appointments-table__tbody"> 
-                <!-- appointments table body render in appointments.js -->
+                <!-- appointments table body render in addAppointment.js -->
             </div>
           </div>
         </section>
