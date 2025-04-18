@@ -1,3 +1,39 @@
+const municipalitySelect = document.getElementById("municipality");
+const barangaySelect = document.getElementById("barangay");
+
+
+// Add select option in municipal and barangays select
+fetch('http://localhost:5000/api/addresses')
+  .then(res => res.json())
+  .then(addresses => {
+    const municipals = Object.keys(addresses.Municipals);
+
+    municipals.forEach(municipal => {
+      const option = document.createElement("option");
+      option.value = municipal;
+      option.textContent = municipal;
+      municipalitySelect.appendChild(option);
+    });
+
+    municipalitySelect.addEventListener("change", () => {
+      const selectedMunicipality = municipalitySelect.value;
+
+      if (selectedMunicipality && addresses.Municipals[selectedMunicipality]) {
+        addresses.Municipals[selectedMunicipality].forEach(barangay => {
+          const option = document.createElement("option");
+          option.value = barangay;
+          option.textContent = barangay;
+          barangaySelect.appendChild(option);
+        });
+        barangaySelect.disabled = false;
+      } else {
+        barangaySelect.disabled = true;
+      }
+    });
+  });
+
+  
+
 // Open and Close addAppointment
 const addAppointmentContainer = document.querySelector('.add-appointment-container');
 
@@ -33,7 +69,7 @@ document.getElementById('add-appointments-form').addEventListener('submit', asyn
         }
         if (clientEmail === '') clientEmailInput.value = 'No Email';
         
-
+        
         const appointmentData = {
             appointmentTitle: document.getElementById('appointment-title').value, 
             swineType: document.getElementById('swine-type').value, 
@@ -60,8 +96,8 @@ document.getElementById('add-appointments-form').addEventListener('submit', asyn
         const result = await response.json();
 
         if (response.ok) {
-            showAlert("Success", "Appointment Created", "success");//Successful Creation of Account
-            document.getElementById('add-appointments-form').reset();
+            showAlert("Success", "Appointment Created", "success");
+            // document.getElementById('add-appointments-form').reset();
         } else {
             showAlert("Error", result.error || "Something went wrong", "error");
         }

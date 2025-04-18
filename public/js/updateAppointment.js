@@ -1,5 +1,5 @@
 // // Handle saving the new schedule
-// const popupForm = document.querySelector('.pop-up-container form');
+// const popupForm = document.querySelector('.appointment-accept-container .appointment-accept-form');
 // popupForm.addEventListener('submit', function (e) {
 //     e.preventDefault(); // Prevent form from refreshing the page
 
@@ -32,7 +32,7 @@
 //         })
 //     })
 //     .then(res => res.json())
-//     .then(data => {
+//     .then(() => {
 //         Swal.fire({
 //             icon: 'success',
 //             title: 'Appointment Schedule',
