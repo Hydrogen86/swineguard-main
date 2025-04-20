@@ -41,6 +41,7 @@ function renderAppointments(appointmentsToRender) {
             </select>
           </p>
           <p data-value="show-more-details" class="td toggle-more-details-btn">View</p>  
+          <p class="appointmentID">${appointment._id}</p>  
         </div>
         <div class="appointment__more-details">
           <div class="appointment__more-details-heading">Appointment Details:</div>
@@ -148,11 +149,14 @@ function renderAppointments(appointmentsToRender) {
   const dateSend = document.getElementById('date-send');
 
   document.querySelectorAll('.select-appointment-action').forEach(dropdown => {
-    dropdown.addEventListener('change', function () {
-      const appointmentId = dropdown.closest('.appointment').dataset.id;
+    const appointmentId = dropdown.closest('.appointment').dataset.id;
 
+    dropdown.addEventListener('change', function () {
       if (this.value === 'ongoing') {
-        const appointment = appointmentsToRender.find(app => app._id === appointmentId);
+        //const appointment = appointmentsToRender.find(app => app._id === appointmentId);
+        const appointment = allAppointments.find(app => app._id === appointmentId);
+        const hiddenInput = document.getElementById('appointmentID');
+        if (hiddenInput) { hiddenInput.setAttribute('data-appointment-id', appointment._id); } // pass the id of the appointment
         dateSend.value = `${appointment.appointmentDate} at ${formatTimeWithAMPM(appointment.appointmentTime)}`;
         acceptForm.style.display = 'block';
       } else if (this.value === 'reschedule') {
@@ -165,6 +169,7 @@ function renderAppointments(appointmentsToRender) {
 
   document.querySelectorAll('.appointment').forEach((appointmentElement, index) => {
     const appointment = appointmentsToRender[index];
+
     const acceptBtn = appointmentElement.querySelector('.appointment-accept-btn');
     const confirmBtn = appointmentElement.querySelector('.appointment-confirm-btn');
     const dropdown = appointmentElement.querySelector('.select-appointment-action');
@@ -177,6 +182,7 @@ function renderAppointments(appointmentsToRender) {
         } else {
           // normal accept logic
           if (dateSend && acceptForm) {
+            const appointment = allAppointments.find(app => app._id === appointmentId);
             dateSend.value = `${appointment.appointmentDate} at ${formatTimeWithAMPM(appointment.appointmentTime)}`;
             acceptForm.style.display = 'block';
           }
@@ -189,8 +195,7 @@ function renderAppointments(appointmentsToRender) {
     }if (confirmBtn) {
       confirmBtn.addEventListener('click', () => {
         if (appointment.appointmentStatus === 'removed') {
-          // DELETE the appointment
-          deleteAppointment(appointmentId);
+          deleteAppointment(appointmentId); // DELETE the appointment
         } else {
           alertMsg(appointment._id, 'completed', confirmBtn);
         }
@@ -264,6 +269,8 @@ if (appointmentFilter) {
   });
 }
 
+
+// BACKEND REQUESTING PART
 
 // Function to update appointment status
 function updateActionAppointment(appointmentId, action) {

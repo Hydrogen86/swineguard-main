@@ -52,7 +52,7 @@ exports.updateAppointments = async (req, res) => {
         const update = await appointmentRequest.findByIdAndUpdate(
             req.params.id,
             { appointmentDate, appointmentTime, appointmentStatus, vetPersonnel, medicine, dosage, vetMessage },
-            { new : true } //retruns the update documents
+            { new : true } 
         );
         res.status(200).json(update);
     } catch (err) {

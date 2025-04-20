@@ -395,3 +395,9 @@ button:disabled {
   border: 1px solid #1a1a1a;     
   opacity: 0.6;               
 }
+.appointmentID {
+  margin-left: 8rem;
+}
+.appointment-id {
+  margin-left: 12rem;
+}
