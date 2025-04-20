@@ -91,7 +91,39 @@ exports.removeAppointments = async (req, res) => {
         res.status(500).json({error: "Failed to remove appointment"});
     }
 }
-//Update appointment by Id and mark as removed
+
+// Restore the removed appointments
+exports.restoreAppointments = async (req, res) => {
+    try {
+        const { appointmentStatus } = req.body;
+        const update = await appointmentRequest.findByIdAndUpdate(
+            req.params.id,
+            { appointmentStatus }.appointmentStatus,
+            { new: true }
+        );
+        res.status(200).json(update);
+    } catch (err) {
+        console.error("Error restoring appointment", err);
+        res.status(500).json({error: "Failed to restore appointment"});
+    }
+}
+
+// Delete appointments by id
+exports.deleteAppointments = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedAppointment = await appointmentRequest.findByIdAndDelete(id);
+        if (!deletedAppointment) {
+            return res.status(404).json({ error: "Appointment not found" });
+        }
+        res.status(200).json({ message: "Appointment deleted successfully", deletedAppointment });
+    } catch (err) {
+        console.error("Error deleting appointment", err);
+        res.status(500).json({error: "Failed to delte appointment"});
+    }
+}
+
+//Update appointment by Id and mark as completed
 exports.completedAppointments = async (req, res) => {
     try {
         const { appointmentStatus } = req.body;

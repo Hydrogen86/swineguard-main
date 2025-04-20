@@ -36,7 +36,7 @@
   padding: 1rem;
   margin-top: 2.5rem;
   overflow: hidden;
-  height: 35rem;
+  height: 45rem;
   font-size: 0.9rem;
 }
 
@@ -305,8 +305,8 @@
 .appointment-accept-form{
   display: none;
   position: absolute;
-  top: 42%;
-  left: 43%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   background-color: #E8E8E8;
   border: 2px solid #3F3F3F;
@@ -380,4 +380,18 @@
   background-color: #EECDCD;
   border: 1px solid #FF0000;
   color: #FF0000;
+}
+
+.appointment-confirm-btn {
+  background-color: #838383;
+  border: 1px solid #1a1a1a;
+  color: #232C27;
+}
+
+button:disabled {
+  background-color: #ccc;   
+  color: #666;         
+  cursor: not-allowed; 
+  border: 1px solid #1a1a1a;     
+  opacity: 0.6;               
 }

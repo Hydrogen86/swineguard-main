@@ -1,11 +1,22 @@
 {
     "Personnel": {
-        "persons": [
-            "Mrs. Veronica P. Laylay",
+        "Animal_Health_Services_Division": [
             "Doc. Josue M. Victoria",
-            "Doc. John Doe",
-            "Mr. John Harvey A. Puyong",
-            "Mr. Mark Carlo M. Naling"
+            "Mr. Eugene Anthony J. Rozal DWM",
+            "Mr. Glenn Q. Deligero",
+            "Mr. Hilario O. Lanete",
+            "Mr. Randolfo A. Largo",
+            "Mr. Eddie Mar R. Laylay"
+        ],
+        "Regulatory_Services_Division": [
+            "Mrs. Mary Ann M. Del Mundo",
+            "Mr. Henry J. Leonida",
+            "Mr. Allien A. Paguio"
+        ],
+        "Administrative_Services_Division": [
+            "Mrs. Veronica P. Laylay",
+            "Mrs. Ma. Janet L. Jandusay",
+            "Mrs. Angelita M. Laririt"
         ]
     }
 }

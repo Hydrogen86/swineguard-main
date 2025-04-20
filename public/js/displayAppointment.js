@@ -11,17 +11,14 @@ fetch('http://localhost:5000/api/appointments')
     console.error('Error fetching appointments:', error);
   });
 
-
 // Function to convert 24-hour time format to 12-hour format with AM/PM
 function formatTimeWithAMPM(time) {
   const [hours, minutes] = time.split(':');
   let hour = parseInt(hours, 10);
   const ampm = hour >= 12 ? 'PM' : 'AM';
-  hour = hour % 12;
-  hour = hour ? hour : 12;
+  hour = hour % 12 || 12;
   return `${hour}:${minutes} ${ampm}`;
 }
-
 
 // Render appointments
 function renderAppointments(appointmentsToRender) {
@@ -29,7 +26,7 @@ function renderAppointments(appointmentsToRender) {
 
   appointmentsToRender.forEach(appointment => {
     appointmentHTML += `
-      <div class="appointment">
+      <div class="appointment" data-id="${appointment._id}">
         <div class="appointment__details">
           <p class="td full-name">${appointment.clientName}</p>
           <p class="td contact">${appointment.clientContact}</p>
@@ -38,8 +35,9 @@ function renderAppointments(appointmentsToRender) {
           <p class="td action">
             <select class="select-appointment-action" name="appointment-action" id="appointment-action">
                  <option value="">Action</option>
-                 <option value="ongoing">Accept</option>
-                 <option value="reschedule">Reschedule</option>       
+                 <option value="ongoing" ${appointment.appointmentStatus === 'ongoing' ? 'disabled' : ''}>Accept</option>
+                 <option value="reschedule" ${appointment.appointmentStatus === 'reschedule' ? 'disabled' : ''}>Reschedule</option>       
+                 <option value="removed">Remove</option>       
             </select>
           </p>
           <p data-value="show-more-details" class="td toggle-more-details-btn">View</p>  
@@ -130,7 +128,7 @@ function renderAppointments(appointmentsToRender) {
           </div>
           <div class="buttons-container">
             <button class="appointment-accept-btn btn">Accept</button>
-            <button class="appointment-confirm-btn btn" disabled>Confirm</button>
+            <button class="appointment-confirm-btn btn">Confirm</button>
           </div>
 
         </div>
@@ -138,223 +136,229 @@ function renderAppointments(appointmentsToRender) {
     `;
   });
 
-  const appointmentTableBody = document.querySelector('.manage-appointments-table__tbody').innerHTML = appointmentHTML;
+  // Now insert the HTML first
+  const tableBody = document.querySelector('.manage-appointments-table__tbody');
+  if (tableBody) {
+    tableBody.innerHTML = appointmentHTML;
+  }
+
+  // Now attach listeners
+  const acceptForm = document.querySelector('.appointment-accept-form');
+  const cancelBtn = document.getElementById('cancel-btn');
+  const dateSend = document.getElementById('date-send');
+
+  document.querySelectorAll('.select-appointment-action').forEach(dropdown => {
+    dropdown.addEventListener('change', function () {
+      const appointmentId = dropdown.closest('.appointment').dataset.id;
+
+      if (this.value === 'ongoing') {
+        const appointment = appointmentsToRender.find(app => app._id === appointmentId);
+        dateSend.value = `${appointment.appointmentDate} at ${formatTimeWithAMPM(appointment.appointmentTime)}`;
+        acceptForm.style.display = 'block';
+      } else if (this.value === 'reschedule') {
+        alertMsg(appointmentId, 'reschedule', dropdown);
+      } else if (this.value === 'removed') {
+        alertMsg(appointmentId, 'removed', dropdown);
+      }
+    });
+  });
+
+  document.querySelectorAll('.appointment').forEach((appointmentElement, index) => {
+    const appointment = appointmentsToRender[index];
+    const acceptBtn = appointmentElement.querySelector('.appointment-accept-btn');
+    const confirmBtn = appointmentElement.querySelector('.appointment-confirm-btn');
+    const dropdown = appointmentElement.querySelector('.select-appointment-action');
+    const appointmentId = dropdown.closest('.appointment').dataset.id;
+
+    if (acceptBtn) {
+      acceptBtn.addEventListener('click', () => {
+        if (appointment.appointmentStatus === 'removed') {
+          alertMsg(appointmentId, 'restore', acceptBtn);
+        } else {
+          // normal accept logic
+          if (dateSend && acceptForm) {
+            dateSend.value = `${appointment.appointmentDate} at ${formatTimeWithAMPM(appointment.appointmentTime)}`;
+            acceptForm.style.display = 'block';
+          }
+          const hiddenInput = document.getElementById('appointmentID');
+          if (hiddenInput) {
+            hiddenInput.setAttribute('data-appointment-id', appointment._id);
+          }
+        }
+      });
+    }if (confirmBtn) {
+      confirmBtn.addEventListener('click', () => {
+        if (appointment.appointmentStatus === 'removed') {
+          // DELETE the appointment
+          deleteAppointment(appointmentId);
+        } else {
+          alertMsg(appointment._id, 'completed', confirmBtn);
+        }
+      });
+    }
+
+    //Disable buttons
+    if (appointment.appointmentStatus === 'ongoing') {
+      acceptBtn.disabled = true;
+      confirmBtn.disabled = false;
+    } else if (appointment.appointmentStatus === 'completed') {
+      acceptBtn.disabled = true;
+      confirmBtn.disabled = true;
+      dropdown.disabled = true;
+    } else if (appointment.appointmentStatus === 'reschedule') {
+      acceptBtn.disabled = false;
+      acceptBtn.textContent = 'Reschedule';
+      confirmBtn.disabled = true;
+    } else if (appointment.appointmentStatus === 'pending') {
+      acceptBtn.disabled = false;
+      confirmBtn.disabled = true;
+    } else if (appointment.appointmentStatus === 'removed') {
+      dropdown.disabled = true;
+      acceptBtn.disabled = false;
+      acceptBtn.textContent = 'Restore';
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = 'Delete';
+    }
+  });
+
+  if (cancelBtn && acceptForm) {
+    cancelBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      acceptForm.style.display = 'none';
+      return;
+    });
+  }
+}
+
+// Toggle more details
+document.querySelector('.manage-appointments-table').addEventListener('click', e => {
+  const btn = e.target.closest('.toggle-more-details-btn');
+  if (!btn) return;
+
+  const container = btn.closest('.appointment');
+  const moreDetails = container.querySelector('.appointment__more-details');
+  const value = btn.getAttribute('data-value');
+
+  if (value === 'show-more-details') {
+    moreDetails.style.display = 'block';
+    btn.textContent = 'Hide';
+    btn.setAttribute('data-value', 'hide-more-details');
+  } else {
+    moreDetails.style.display = 'none';
+    btn.textContent = 'View';
+    btn.setAttribute('data-value', 'show-more-details');
+  }
+});
+
+// Filter appointments by status
+const appointmentFilter = document.getElementById('appointment-filter');
+if (appointmentFilter) {
+  appointmentFilter.addEventListener('change', () => {
+    const selectedStatus = appointmentFilter.value;
+    if (!selectedStatus) {
+      renderAppointments(allAppointments);
+    } else {
+      const filtered = allAppointments.filter(app => app.appointmentStatus === selectedStatus);
+      renderAppointments(filtered);
+    }
+  });
 }
 
 
-// appointment toggle more details
-document.querySelector('.manage-appointments-table').addEventListener('click', (e) => {
-  const toggleMoreDetailsBtn = e.target.closest('.toggle-more-details-btn');
-  if(!toggleMoreDetailsBtn) return;
+// Function to update appointment status
+function updateActionAppointment(appointmentId, action) {
+  const endpointMap = {
+    completed: 'completed',
+    reschedule: 'reschedule',
+    removed: 'remove',
+    restore: 'restore'
+  };
 
-  const appointment = toggleMoreDetailsBtn.closest('.appointment');
-  const moreDetails = appointment.querySelector('.appointment__more-details');
-  const toggleBtnValue = toggleMoreDetailsBtn.getAttribute('data-value');
+  const endpoint = endpointMap[action];
 
-  const showMoreDetails = () => {
-    moreDetails.style.display = 'block';
-    toggleMoreDetailsBtn.innerText = 'Hide';
-    toggleMoreDetailsBtn.removeAttribute('data-value', 'show-more-details');
-    toggleMoreDetailsBtn.setAttribute('data-value', 'hide-more-details');
-  }
+ // Set the correct status based on the action
+ let appointmentStatus = action;
+ if (action === 'restore') {
+   appointmentStatus = 'pending'; // Set to pending when restoring
+ }
 
-  const hideMoreDetails = () => {
-    moreDetails.style.display = 'none';
-    toggleMoreDetailsBtn.innerText = 'View';
-    toggleMoreDetailsBtn.removeAttribute('data-value', 'hide-more-details');
-    toggleMoreDetailsBtn.setAttribute('data-value', 'show-more-details');
-  }
+  fetch(`http://localhost:5000/api/appointments/${appointmentId}/${endpoint}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ appointmentStatus})
+  })
+    .then(res => res.json())
+    .then(data => {
+      Swal.fire({
+        icon: 'success',
+        title: `Appointment ${action}`,
+        text: `Appointment ${action} successfully!`
+      }).then(() => {
+        window.location.reload();
+      });
+    })
+    .catch(err => {
+      console.error("Error updating appointment:", err);
+    });
+}
 
-  if (toggleBtnValue === 'show-more-details') showMoreDetails()
-  else if (toggleBtnValue === 'hide-more-details') hideMoreDetails()
-});
+// Placeholder for alertMsg (define this function based on your logic)
+function alertMsg(id, action, element) {
+  Swal.fire({
+    title: `Are you sure to ${action} this appointment?`,
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    icon: 'warning'
+  }).then(result => {
+    if (result.isConfirmed) {
+      updateActionAppointment(id, action);
+    } else {
+      element.value = ''; // Reset dropdown
+    }
+  });
+}
 
-
-// Appointment filter based on the status
-const appointmentFilter = document.getElementById('appointment-filter');
-appointmentFilter.addEventListener('change', () => {
-  const selectedStatus = appointmentFilter.value;
-  if (!selectedStatus) {
-    renderAppointments(allAppointments);
-  } else {
-    const filtered = allAppointments.filter(app => app.appointmentStatus === selectedStatus);
-    renderAppointments(filtered);
-  }
-});
-
-
-
-// Appointment action update
-// function updateActionAppointment(appointmentId, action) {
-//   const endpointMap = {
-//     completed: 'completed',
-//     reschedule: 'reschedule',
-//     removed: 'remove'
-//   };
-
-//   const endpoint = endpointMap[action];
-//   fetch(`http://localhost:5000/api/appointments/${appointmentId}/${endpoint}`, {
-//     method: 'PUT',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({ appointmentStatus: action })
-//   })
-//     .then(res => res.json())
-//     .then(data => {
-//       Swal.fire({
-//         icon: 'success',
-//         title: `Appointment ${action}`,
-//         text: `Appointment ${action} successfully!`
-//       }).then(() => {
-//         window.location.reload();
-//       });
-//     })
-//     .catch(err => {
-//       console.error("Error rescheduling appointment:", err);
-//       Swal.fire({
-//         icon: 'error',
-//         title: 'Appointment Reschedule',
-//         text: 'Appointment reschedule Failed!'
-//       });
-//     });
-// }
-
-// action update confirmation
-// function alertMsg(appointmentId, updateAction, selectAppointentAction) {
-//   Swal.fire({
-//     title: 'Are you sure?',
-//     text: `Do you really want to ${updateAction} this appointment?`,
-//     icon: 'warning',
-//     showCancelButton: true,
-//     confirmButtonColor: '#d33',
-//     cancelButtonColor: '#3085d6',
-//     confirmButtonText: `Yes, ${updateAction} it!`,
-//     cancelButtonText: 'No, keep it'
-//   }).then((result) => {
-//     if (result.isConfirmed) {
-//       updateActionAppointment(appointmentId, updateAction);
-//     } else {
-//       selectAppointentAction.value = '';
-//     }
-//   });
-// }
-
-
-
-
-// const acceptBtn = document.querySelector('.appointment-accept-btn');
-// const confirmBtn = document.querySelector('.appointment-confirm-btn');
-// const appointmentStatus = document.querySelector('.appointment .status')
-
-
-  
-
-// Cancel Accept form
-// const cancelBtn = document.querySelector('.cancel-edit-btn');
-// if (cancelBtn) {
-//   cancelBtn.addEventListener('click', () => {
-//     const popUpContainer = document.querySelector('.pop-up-container');
-//     popUpContainer.classList.remove('show');
-//     popUpContainer.classList.add('hide');
-//     setTimeout(() => {
-//       popUpContainer.style.display = 'none';
-//     }, 600);
-//   });
-// }
-
-
-
-
-
-
-
-  // const showPopUp = function () {
-  //   const popUpContainer = document.querySelector('.pop-up-container');
-  //   const appointmentId = appointment._id;
-  //   const dateSendField = document.getElementById('date-send');
-  //   const displayTime = formatTimeWithAMPM(appointment.appointmentTime);
-  //   dateSendField.value = `${appointment.appointmentDate} at ${displayTime}`;
-  //   popUpContainer.style.display = 'block';
-  //   popUpContainer.classList.add('show');
-  //   popUpContainer.classList.remove('hide');
-  //   document.getElementById('set-schedule').dataset.appointmentId = appointmentId;
-  // };
-
-  // acceptBtn.addEventListener('click', showPopUp);
-  // confirmBtn.addEventListener('click', () => {
-  //   alertMsg(appointment._id, 'completed', confirmBtn);
-  // });
-
-
-// const selectAppointentAction = document.querySelector('.select-appointment-action');
-
-// selectAppointentAction.addEventListener('change', function () {
-//   const appointmentId = appointment._id;
-//   if (selectAppointentAction.value === 'ongoing') {
-//     showPopUp();
-//   } else if (selectAppointentAction.value === 'reschedule') {
-//     alertMsg(appointmentId, 'reschedule', selectAppointentAction);
-//   }
-// });
-
-
-
-
-
-// // Update appointment status function
-// function updateActionAppointment(appointmentId, action) {
-//   const endpointMap = {
-//     completed: 'completed',
-//     reschedule: 'reschedule',
-//   };
-
-//   const endpoint = endpointMap[action];
-//   fetch(`http://localhost:5000/api/appointments/${appointmentId}/${endpoint}`, {
-//     method: 'PUT',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify({ appointmentStatus: action })
-//   })
-//     .then(res => res.json())
-//     .then(data => {
-//       Swal.fire({
-//         icon: 'success',
-//         title: `Appointment ${action}`,
-//         text: `Appointment ${action} successfully!`
-//       }).then(() => {
-//         window.location.reload();
-//       });
-//     })
-//     .catch(err => {
-//       console.error("Error rescheduling appointment:", err);
-//       Swal.fire({
-//         icon: 'error',
-//         title: 'Appointment Reschedule',
-//         text: 'Appointment reschedule Failed!'
-//       });
-//     });
-// }
-
-// // SweetAlert for confirmation
-// function alertMsg(appointmentId, updateAction, selectAppointentAction) {
-//   Swal.fire({
-//     title: 'Are you sure?',
-//     text: `Do you really want to ${updateAction} this appointment?`,
-//     icon: 'warning',
-//     showCancelButton: true,
-//     confirmButtonColor: '#d33',
-//     cancelButtonColor: '#3085d6',
-//     confirmButtonText: `Yes, ${updateAction} it!`,
-//     cancelButtonText: 'No, keep it'
-//   }).then((result) => {
-//     if (result.isConfirmed) {
-//       updateActionAppointment(appointmentId, updateAction);
-//     } else {
-//       selectAppointentAction.value = '';
-//     }
-//   });
-// }
-
+// Delete appointment
+function deleteAppointment(appointmentId) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "Do you really want to delete this appointment?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it!',
+    cancelButtonText: 'No, cancel',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // User confirmed deletion
+      fetch(`http://localhost:5000/api/appointments/${appointmentId}`, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(data => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Appointment Deleted',
+          text: 'Appointment deleted successfully!',
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch(err => {
+        console.error('Delete error:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Something went wrong while deleting the appointment.',
+        });
+      });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      Swal.fire({
+        title: 'Cancelled',
+        text: 'The appointment was not deleted.',
+        icon: 'info'
+      });
+    }
+  });
+}
 

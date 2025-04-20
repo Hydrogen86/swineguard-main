@@ -97,7 +97,7 @@ document.getElementById('add-appointments-form').addEventListener('submit', asyn
 
         if (response.ok) {
             showAlert("Success", "Appointment Created", "success");
-            // document.getElementById('add-appointments-form').reset();
+            document.getElementById('add-appointments-form').reset();
         } else {
             showAlert("Error", result.error || "Something went wrong", "error");
         }

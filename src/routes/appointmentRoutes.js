@@ -21,11 +21,15 @@ router.get('/medicines', appointmentController.getAllMedicines);
 router.get('/personnel', appointmentController.getAllPersonnel);
 
 
-//update appointments by Id completed, accepted, rejected and removed
+//update appointments by Id completed, accepted, rejected, removed, restore and delete
 router.put('/appointments/:id/update', appointmentController.updateAppointments);
 router.put('/appointments/:id/reschedule', appointmentController.rescheduleAppointments);
 router.put('/appointments/:id/remove', appointmentController.removeAppointments);
 router.put('/appointments/:id/completed', appointmentController.completedAppointments);
+router.put('/appointments/:id/restore', appointmentController.removeAppointments);
+
+//Delete apointments
+router.delete('/appointments/:id', appointmentController.deleteAppointments);
 
 // Serve admin homepage HTML
 router.get('/adminHomepage', (req, res) => {
