@@ -38,9 +38,16 @@ fetch('http://localhost:5000/api/addresses')
 const addAppointmentContainer = document.querySelector('.add-appointment-container');
 
 document.querySelector('.add-appointment-btn').
-  addEventListener('click', () => addAppointmentContainer.style.display = 'block');
+  addEventListener('click', () => {
+    addAppointmentContainer.style.display = 'block';
+    document.getElementById('modal-overlay').style.display = 'block';
+  });
+  
 document.querySelector('.cancel-add-appointment-btn').
-  addEventListener('click', () => addAppointmentContainer.style.display = 'none');
+  addEventListener('click', () => {
+    addAppointmentContainer.style.display = 'none';
+    document.getElementById('modal-overlay').style.display = 'none';
+  });
 
 
 //Show Alert Function

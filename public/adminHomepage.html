@@ -16,8 +16,7 @@
     <link rel="stylesheet" href="styles/sections-style/setting-section.css">
     <link rel="stylesheet" href="styles/sections-style/calendar-section.css">
 
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css' rel='stylesheet' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </head>
   <body>
      <!-- header -->
@@ -39,7 +38,7 @@
       </form>
 
       <div class="admin-profile">
-        <img class="admin-profile__pic" src="images-and-icons/images/money-admin-profile.jpg" alt="admin-profile-pic" >
+        <img class="admin-profile__pic" src="images-and-icons/images/vet logo.jpg" alt="admin-profile-pic" >
         <p class="admin-profile__label">ADMIN</p>
       </div>
 
@@ -55,7 +54,7 @@
       <!-- side-nav -->
       <nav class="side-nav">
         <ul class="side-nav__link-list">
-          <li class="side-nav__link">
+          <li class="side-nav__link focus" id="dashboard-link">
             <img class="side-nav__link-icon" src="images-and-icons/icons/dashboard-icon.png" alt="dashboard-icon">
             <p class="side-nav__link-label">Dashboard</p>
           </li>
@@ -71,7 +70,7 @@
             <img class="side-nav__link-icon" src="images-and-icons/icons/appointment-icon.png" alt="appointments-icon">
             <p class="side-nav__link-label">Schedule</p>
           </li>
-          <li class="side-nav__link focus">
+          <li class="side-nav__link" id="appointment-link">
             <img class="side-nav__link-icon" src="images-and-icons/icons/appointment-icon.png" alt="appointments-icon">
             <p class="side-nav__link-label">Appointments</p>
           </li>
@@ -88,7 +87,88 @@
     
       <!-- sections -->
       <div class="sections-wrapper">
-        <section id="dashboard-section" class="dashboard-icon">No Content</section>
+
+
+
+
+        <section id="dashboard-section" class="dashboard-section">
+        
+          <h1 class="section__heading">Manage Dashboards</h1>
+
+          <div class="dashboard-nav">
+            <span>Population</span>
+            <span>Types</span>
+            <span>Appointments</span>
+          </div>
+          <div class="dashboard-container">
+            <h3>Summary</h3> 
+
+            <div class="innerDashboard-container">
+              <div class="side-chart">
+                <div class="chart-container">
+                  <h4>Total Appoinments: <span id="all-appointments">No appointments</span> </h4> 
+                  <div id="piechart-container" class="piechart-container">
+                    <!-- Pie charts here -->
+                  </div>
+                </div>
+                <!-- Progress Bar here -->
+                <div class="progress-container">
+                  <div class="progress-div success" >
+                    <div class="text-area">
+                      <p>Successful Appointments</p>
+                      <span id="success-percentage"></span>
+                    </div>
+                    <progress value="" max="100" id="success-progressBar"></progress>
+                  </div>
+                  <div class="progress-div ongoing" >
+                    <div class="text-area">
+                      <p>On Progress Appointments</p>
+                      <span id="ongoing-percentage"></span>
+                    </div>
+                    <progress value="" max="100" id="ongoing-progressBar"></progress>
+                  </div>
+                  <div class="progress-div pending">
+                    <div class="text-area">
+                      <p>Pending Appointments</p>
+                      <span id="pending-percentage">%</span>
+                    </div>
+                    <progress value="" max="100" id="pending-progressBar"></progress>
+                  </div>
+                  <div class="progress-div failed" >
+                    <div class="text-area">
+                      <p>Failed Appointments</p>
+                      <span id="failed-percentage"></span>
+                    </div>
+                    <progress value="" max="100" id="failed-progressBar"></progress>
+                  </div>
+                </div>
+              </div>
+
+              <div class="side-chart">
+                <div class="chart-container vertical">
+                  <h4>Status Chart</h4>
+                  <div class="barchart-container" id="barchart-container">
+                    <!-- Bar Chart here -->
+                  </div>
+                </div>
+
+                <div class="chart-container vertical">
+                  <h4>Services</h4>
+                    <div class="verticalchart-container" id="verticalchart-container">
+                      <!-- Donut Chart here -->
+                    </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+
+
+
+
         <section id="database-section">No Content</section>
         <section id="messages-section">No Content</section>
 
@@ -233,26 +313,12 @@
       </div>
     </main>
 
-    <!-- <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const calendarEl = document.getElementById('calendar');
-
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth',
-          events: [
-            { title: 'Client A', start: '2025-04-23' },
-            { title: 'Client B', start: '2025-04-24T14:00:00' }
-          ]
-        });
-
-        calendar.render();
-      });
-    </script> -->
-
+    <script src="./js/buttonsBehavior.js"></script>
     <script src="./js/displayAppointment.js"></script> <!-- External JS file -->
     <script src="./js/updateAppointment.js"></script> 
     <script src="./js/data.js"></script> 
     <script src="./js/schedule.js"></script> 
+    <script src="./js/dashboardChart.js"></script> 
     <script type="module" src="./js/addAppointment.js"></script> 
   </body>
 </html>

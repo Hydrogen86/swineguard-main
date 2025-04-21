@@ -1,3 +1,7 @@
+.appointment-section {
+  display: none;
+}
+
 .appointment-section .select-and-btn-container {
   position: absolute;
   right: var(--section-side-spacing);
@@ -7,6 +11,10 @@
   flex-direction: column;
   width: 223px;
 }
+/* 
+#appointment-filter {
+  margin-top: 2rem;
+} */
 
 .appointment-section .select-and-btn-container__filter-apointments-status,
 .appointment-section .select-and-btn-container__add-appointment-btn {
@@ -210,7 +218,7 @@
   display: none;
   position: absolute;
   left: 100px;
-  top: 0;
+  top: 15%;
   width: 85%;
   height: 600px;
   background-color: white;
@@ -400,4 +408,15 @@ button:disabled {
 }
 .appointment-id {
   margin-left: 12rem;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* dark semi-transparent */
+  z-index: 0; /* Behind the form */
 }

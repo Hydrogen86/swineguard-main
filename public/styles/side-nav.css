@@ -1,3 +1,4 @@
+
 .side-nav{
   position: fixed;
   bottom: 0;
@@ -5,6 +6,7 @@
   top: var(--header-height);
   width: var(--sidenav-width); /* variable is in the body */
   padding-top: 2.5rem;
+  z-index: 1000;
 }
 
 .side-nav__link-list{
@@ -25,7 +27,7 @@
 }
 
 .side-nav__link.focus{
-  background-color: rgb(9, 152, 76);
+  background-color: #09984c;
 }
 
 .side-nav__link:hover{
