@@ -5,6 +5,7 @@ require('module-alias/register');
 const connectionDB = require('./src/config/db');
 const appointment = require('./src/models/appointment');
 const cors = require('cors');
+const verifyToken = require('./src/middleware/adminHomepage');
 
 require('dotenv').config();
 const app = express();
@@ -20,13 +21,20 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, './public')));
 
 // // 🔹 Serve index.html when accessing the root URL
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/adminHomepage.html'));
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'public/adminHomepage.html'));
+// });
+app.get('/adminHomepage', verifyToken, (req, res) => {
+    res.sendFile(path.join(__dirname, 'src/views/adminHomepage.html'));
 });
 
 // ✅ Use the combined appointment routes (GET, PUT, etc.)
 const appointmentsRoute = require("./src/routes/appointmentRoutes");
 app.use('/api', appointmentsRoute);
+
+// Admin login routes
+const adminRoutes = require('./src/routes/adminRoutes');
+app.use('/api/admin', adminRoutes);
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server is running on port http://localhost:${PORT}`));

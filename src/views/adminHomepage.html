@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="styles/normalize.css">
-    <link rel="stylesheet" href="styles/global.css">
-    <link rel="stylesheet" href="styles/header.css">
-    <link rel="stylesheet" href="styles/side-nav.css">
-    <link rel="stylesheet" href="styles/sections-style/dashboard-section.css">
-    <link rel="stylesheet" href="styles/sections-style/database-section.css">
-    <link rel="stylesheet" href="styles/sections-style/messages-section.css">
-    <link rel="stylesheet" href="styles/sections-style/appointments-section.css">
-    <link rel="stylesheet" href="styles/sections-style/inventory-section.css">
-    <link rel="stylesheet" href="styles/sections-style/setting-section.css">
-    <link rel="stylesheet" href="styles/sections-style/calendar-section.css">
+    <script>
+      const token = localStorage.getItem('token');
+      if (!token) {
+          // No token = not logged in, redirect to login
+          window.location.href = '/adminLoginPage.html';
+      }
+    </script>
+    <link rel="stylesheet" href="/styles/normalize.css">
+    <link rel="stylesheet" href="/styles/global.css">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/side-nav.css">
+    <link rel="stylesheet" href="/styles/sections-style/dashboard-section.css">
+    <link rel="stylesheet" href="/styles/sections-style/database-section.css">
+    <link rel="stylesheet" href="/styles/sections-style/messages-section.css">
+    <link rel="stylesheet" href="/styles/sections-style/appointments-section.css">
+    <link rel="stylesheet" href="/styles/sections-style/inventory-section.css">
+    <link rel="stylesheet" href="/styles/sections-style/setting-section.css">
+    <link rel="stylesheet" href="/styles/sections-style/calendar-section.css">
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
   </head>
@@ -28,23 +35,23 @@
       </div>
 
       <div class="header__swine-logo">
-        <img class="header__swine-logo-img" src="images-and-icons/icons/swineGuard-logo.png" alt="img-logo">
+        <img class="header__swine-logo-img" src="/images-and-icons/icons/swineGuard-logo.png" alt="img-logo">
         <p class="header__swine-logo-label">Swine Guard</p>
       </div>
 
       <form class="header__search">
-        <img class="header__search-icon" src="images-and-icons/icons/search-icon.png" alt="search-icon"></img>
+        <img class="header__search-icon" src="/images-and-icons/icons/search-icon.png" alt="search-icon"></img>
         <input class="header__search-input" type="text" placeholder="Search...">   
       </form>
 
       <div class="admin-profile">
-        <img class="admin-profile__pic" src="images-and-icons/images/vet logo.jpg" alt="admin-profile-pic" >
+        <img class="admin-profile__pic" src="/images-and-icons/images/vet logo.jpg" alt="admin-profile-pic" >
         <p class="admin-profile__label">ADMIN</p>
       </div>
+      <img class="header__arrow-down-icon" src="/images-and-icons/icons/arrow-down-icon.png" alt="arrow-down-icon" >
 
-      <img class="header__arrow-down-icon" src="images-and-icons/icons/arrow-down-icon.png" alt="arrow-down-icon">
       <div class="header__notification">
-        <img class="header__notification-icon" src="images-and-icons/icons/notification-icon.png" alt="notification-icon" >
+        <img class="header__notification-icon" src="/images-and-icons/icons/notification-icon.png" alt="notification-icon" >
         <p class="header__notification-number">1</p>
       </div>
      
@@ -55,41 +62,42 @@
       <nav class="side-nav">
         <ul class="side-nav__link-list">
           <li class="side-nav__link focus" id="dashboard-link">
-            <img class="side-nav__link-icon" src="images-and-icons/icons/dashboard-icon.png" alt="dashboard-icon">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/dashboard-icon.png" alt="dashboard-icon">
             <p class="side-nav__link-label">Dashboard</p>
           </li>
           <!-- <li class="side-nav__link">
-            <img class="side-nav__link-icon" src="images-and-icons/icons/database-icon.png" alt="database-icon">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/database-icon.png" alt="database-icon">
             <p class="side-nav__link-label">Database</p>
           </li>
           <li class="side-nav__link">
-            <img class="side-nav__link-icon" src="images-and-icons/icons/messages-icon.png" alt="message-icon">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/messages-icon.png" alt="message-icon">
             <p class="side-nav__link-label">Messages</p>
           </li> -->
           <li class="side-nav__link">
-            <img class="side-nav__link-icon" src="images-and-icons/icons/appointment-icon.png" alt="appointments-icon">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/appointment-icon.png" alt="appointments-icon">
             <p class="side-nav__link-label">Schedule</p>
           </li>
           <li class="side-nav__link" id="appointment-link">
-            <img class="side-nav__link-icon" src="images-and-icons/icons/appointment-icon.png" alt="appointments-icon">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/appointment-icon.png" alt="appointments-icon">
             <p class="side-nav__link-label">Appointments</p>
           </li>
           <li class="side-nav__link">
-            <img class="side-nav__link-icon" src="images-and-icons/icons/inventory-icon.png" alt="inventory-icon">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/inventory-icon.png" alt="inventory-icon">
             <p class="side-nav__link-label">Inventory</p>
           </li>
           <li class="side-nav__link">
-            <img class="side-nav__link-icon" src="images-and-icons/icons/setting-icon.png" alt="settings-icon">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/setting-icon.png" alt="settings-icon">
             <p class="side-nav__link-label">Settings</p>
+          </li>
+          <li class="side-nav__link" id="logout-link">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/logout.png" alt="settings-icon">
+            <p class="side-nav__link-label">Log out</p>
           </li>
         </ul>
       </nav>
     
       <!-- sections -->
       <div class="sections-wrapper">
-
-
-
 
         <section id="dashboard-section" class="dashboard-section">
         
@@ -164,10 +172,6 @@
 
           </div>
         </section>
-
-
-
-
 
         <section id="database-section">No Content</section>
         <section id="messages-section">No Content</section>
@@ -313,12 +317,13 @@
       </div>
     </main>
 
-    <script src="./js/buttonsBehavior.js"></script>
-    <script src="./js/displayAppointment.js"></script> <!-- External JS file -->
-    <script src="./js/updateAppointment.js"></script> 
-    <script src="./js/data.js"></script> 
-    <script src="./js/schedule.js"></script> 
-    <script src="./js/dashboardChart.js"></script> 
-    <script type="module" src="./js/addAppointment.js"></script> 
+    <script src="/js/buttonsBehavior.js"></script>
+    <script src="/js/displayAppointment.js"></script>
+    <script src="/js/updateAppointment.js"></script>
+    <script src="/js/data.js"></script>
+    <script src="/js/schedule.js"></script>
+    <script src="/js/dashboardChart.js"></script>
+    <script src="/js/admin.js"></script>
+    <script type="module" src="/js/addAppointment.js"></script>
   </body>
 </html>
