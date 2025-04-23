@@ -96,7 +96,8 @@
 }
 
 .manage-appointments-table__tbody .appointment {
-  background-color: #D2D2D2;
+  /* background-color: #D2D2D2; */
+  background-color: #DDE7FD;
   padding: 0.7rem 0;
   border-radius: 8px;
 }
@@ -128,9 +129,9 @@
 .manage-appointments-table__tbody .td.status {
   width: var(--status-width);
   max-width: var(--status-width);
-  border: 1px solid #009947;
-  background-color: #1dff8722;
-  color: #009947;
+  border: 1px solid #015e2c;
+  background-color: #3bee8e;
+  color: #015e2c;
   border-radius: 20px;
   padding: 0.2rem 0;
 }
