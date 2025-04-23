@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <script>
       const token = localStorage.getItem('token');
       if (!token) {
@@ -11,6 +12,7 @@
           window.location.href = '/adminLoginPage.html';
       }
     </script>
+
     <link rel="stylesheet" href="/styles/normalize.css">
     <link rel="stylesheet" href="/styles/global.css">
     <link rel="stylesheet" href="/styles/header.css">
@@ -65,27 +67,27 @@
             <img class="side-nav__link-icon" src="/images-and-icons/icons/dashboard-icon.png" alt="dashboard-icon">
             <p class="side-nav__link-label">Dashboard</p>
           </li>
-          <!-- <li class="side-nav__link">
-            <img class="side-nav__link-icon" src="/images-and-icons/icons/database-icon.png" alt="database-icon">
-            <p class="side-nav__link-label">Database</p>
-          </li>
-          <li class="side-nav__link">
-            <img class="side-nav__link-icon" src="/images-and-icons/icons/messages-icon.png" alt="message-icon">
-            <p class="side-nav__link-label">Messages</p>
-          </li> -->
-          <li class="side-nav__link">
-            <img class="side-nav__link-icon" src="/images-and-icons/icons/appointment-icon.png" alt="appointments-icon">
+          <li class="side-nav__link" id="schedule-link">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/schedule-icon.png" alt="appointments-icon">
             <p class="side-nav__link-label">Schedule</p>
           </li>
           <li class="side-nav__link" id="appointment-link">
             <img class="side-nav__link-icon" src="/images-and-icons/icons/appointment-icon.png" alt="appointments-icon">
             <p class="side-nav__link-label">Appointments</p>
           </li>
-          <li class="side-nav__link">
+          <li class="side-nav__link" id="database-link">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/database-icon.png" alt="database-icon">
+            <p class="side-nav__link-label">Database</p>
+          </li>
+          <li class="side-nav__link" id="message-link">
+            <img class="side-nav__link-icon" src="/images-and-icons/icons/messages-icon.png" alt="message-icon">
+            <p class="side-nav__link-label">Messages</p>
+          </li>
+          <li class="side-nav__link" id="inventory-link">
             <img class="side-nav__link-icon" src="/images-and-icons/icons/inventory-icon.png" alt="inventory-icon">
             <p class="side-nav__link-label">Inventory</p>
           </li>
-          <li class="side-nav__link">
+          <li class="side-nav__link" id="setting-link">
             <img class="side-nav__link-icon" src="/images-and-icons/icons/setting-icon.png" alt="settings-icon">
             <p class="side-nav__link-label">Settings</p>
           </li>
@@ -173,11 +175,8 @@
           </div>
         </section>
 
-        <section id="database-section">No Content</section>
-        <section id="messages-section">No Content</section>
-
-        <section id="calendar-section" class="calendar-section">
-          <div id='calendar'></div>
+        <section id="schedule-section" class="schedule-section">
+          <div id='calendar'>No Content</div>
         </section>
 
         <section id="appointments-section" class="appointment-section">
@@ -271,8 +270,7 @@
             </div>
           </div>
           
-          <!-------Appointment Accept Form------->
-         
+          <!-------Appointment Accept Form------->   
           <form class="appointment-accept-form" >
             <h2 class="appointment-accept-form__heading">Appointment Schedule</h2>
             <input type="hidden" id="appointmentID" data-appointment-id=""><!--Id for the appointments-->
@@ -312,12 +310,15 @@
 
         </section>
 
+        <section id="database-section">No Content</section>
+        <section id="messages-section">No Content</section>
+
         <section id="inventory-section">No Content</section>
         <section id="setting-section">No Content</section>
       </div>
     </main>
 
-    <script src="/js/buttonsBehavior.js"></script>
+    <script src="/js/sideNav.js"></script>
     <script src="/js/displayAppointment.js"></script>
     <script src="/js/updateAppointment.js"></script>
     <script src="/js/data.js"></script>

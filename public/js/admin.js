@@ -75,15 +75,19 @@ function alertMsg(title, message, icon) {
     });
 }
 
-// Show hide Passeord
-document.getElementById('togglePassword').addEventListener('click', function () {
-    const passwordField = document.getElementById('login-password');
-    const icon = this;
+// Show hide Password
+const togglePass = document.getElementById('togglePassword');
+if (!togglePass) console.log('no error');
+else {
+    togglePass.addEventListener('click', function () {
+        const passwordField = document.getElementById('login-password');
+        const icon = this;
 
-    const isPassword = passwordField.getAttribute('type') === 'password';
+        const isPassword = passwordField.getAttribute('type') === 'password';
 
-    passwordField.setAttribute('type', isPassword ? 'text' : 'password');
-    icon.src = isPassword 
-        ? './images-and-icons/icons/hidden.png' 
-        : './images-and-icons/icons/show.png';
-});
+        passwordField.setAttribute('type', isPassword ? 'text' : 'password');
+        icon.src = isPassword 
+            ? './images-and-icons/icons/hidden.png' 
+            : './images-and-icons/icons/show.png';
+    });
+}

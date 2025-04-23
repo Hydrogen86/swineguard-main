@@ -131,7 +131,6 @@ function renderAppointments(appointmentsToRender) {
             <button class="appointment-accept-btn btn">Accept</button>
             <button class="appointment-confirm-btn btn">Confirm</button>
           </div>
-
         </div>
       </div>
     `;
@@ -156,13 +155,18 @@ function renderAppointments(appointmentsToRender) {
         //const appointment = appointmentsToRender.find(app => app._id === appointmentId);
         const appointment = allAppointments.find(app => app._id === appointmentId);
         const hiddenInput = document.getElementById('appointmentID');
+
         if (hiddenInput) { hiddenInput.setAttribute('data-appointment-id', appointment._id); } // pass the id of the appointment
         dateSend.value = `${appointment.appointmentDate} at ${formatTimeWithAMPM(appointment.appointmentTime)}`;
+
         acceptForm.style.display = 'block';
       } else if (this.value === 'reschedule') {
-        alertMsg(appointmentId, 'reschedule', dropdown);
+        // alertMsg(appointmentId, 'reschedule', dropdown);// reschedule
+        updateAppointments(appointmentId, 'reschedule');
+
       } else if (this.value === 'removed') {
-        alertMsg(appointmentId, 'removed', dropdown);
+        // alertMsg(appointmentId, 'removed', dropdown); // removed
+        updateAppointments(appointmentId, 'removed');
       }
     });
   });
@@ -178,7 +182,7 @@ function renderAppointments(appointmentsToRender) {
     if (acceptBtn) {
       acceptBtn.addEventListener('click', () => {
         if (appointment.appointmentStatus === 'removed') {
-          alertMsg(appointmentId, 'restore', acceptBtn);
+          updateAppointments(appointmentId, 'restore');
         } else {
           // normal accept logic
           if (dateSend && acceptForm) {
@@ -197,7 +201,7 @@ function renderAppointments(appointmentsToRender) {
         if (appointment.appointmentStatus === 'removed') {
           deleteAppointment(appointmentId); // DELETE the appointment
         } else {
-          alertMsg(appointment._id, 'completed', confirmBtn);
+          updateAppointments(appointment._id, 'completed', confirmBtn);
         }
       });
     }
@@ -272,59 +276,6 @@ if (appointmentFilter) {
 
 // BACKEND REQUESTING PART
 
-// Function to update appointment status
-function updateActionAppointment(appointmentId, action) {
-  const endpointMap = {
-    completed: 'completed',
-    reschedule: 'reschedule',
-    removed: 'remove',
-    restore: 'restore'
-  };
-
-  const endpoint = endpointMap[action];
-
- // Set the correct status based on the action
- let appointmentStatus = action;
- if (action === 'restore') {
-   appointmentStatus = 'pending'; // Set to pending when restoring
- }
-
-  fetch(`http://localhost:5000/api/appointments/${appointmentId}/${endpoint}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ appointmentStatus})
-  })
-    .then(res => res.json())
-    .then(data => {
-      Swal.fire({
-        icon: 'success',
-        title: `Appointment ${action}`,
-        text: `Appointment ${action} successfully!`
-      }).then(() => {
-        window.location.reload();
-      });
-    })
-    .catch(err => {
-      console.error("Error updating appointment:", err);
-    });
-}
-
-// Placeholder for alertMsg (define this function based on your logic)
-function alertMsg(id, action, element) {
-  Swal.fire({
-    title: `Are you sure to ${action} this appointment?`,
-    showCancelButton: true,
-    confirmButtonText: 'Yes',
-    icon: 'warning'
-  }).then(result => {
-    if (result.isConfirmed) {
-      updateActionAppointment(id, action);
-    } else {
-      element.value = ''; // Reset dropdown
-    }
-  });
-}
-
 // Delete appointment
 function deleteAppointment(appointmentId) {
   Swal.fire({
@@ -368,4 +319,69 @@ function deleteAppointment(appointmentId) {
     }
   });
 }
+
+// //Reschedule, Complete, Restore and Remove appointments
+function updateAppointments(appointmentId, action, element) {
+
+  const endpointMap = {
+        completed: 'completed',
+        reschedule: 'reschedule',
+        removed: 'removed',
+        restore: 'restore'
+      };
+
+  let status = action;
+   if (action === 'restore') {
+     status = 'pending'; // Set to pending when restoring
+   }
+      
+
+  Swal.fire({
+    title: 'Are you sure?',
+    text: `Do you really want to ${action} this appointment?`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: `Yes, ${action} it!`,
+    cancelButtonText: 'No, cancel',
+    reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // User confirmed the action
+      fetch(`http://localhost:5000/api/appointments/${appointmentId}/${action}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ appointmentStatus: status})
+      })
+      .then(res => res.json())
+      .then(data => {
+        Swal.fire({
+          icon: 'success',
+          title: `Appointment ${action}`,
+          text: `Appointment ${action} successfully!`,
+        }).then(() => {
+          window.location.reload();
+        });
+      })
+      .catch(err => {
+        console.error('Delete error:', err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: `Something went wrong while ${action} the appointment.`,
+        });
+      });
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      // Only reset dropdowns
+      if (element && element.tagName === 'element') {
+        element.value = ''; // Reset dropdown
+      }
+      Swal.fire({
+        title: 'Cancelled',
+        text: `The appointment was not ${action}.`,
+        icon: 'info'
+      });
+    }
+  });
+}
+
 
