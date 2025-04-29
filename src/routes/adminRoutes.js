@@ -11,4 +11,9 @@ router.get('/adminHomepage', (req, res) => {
     res.sendFile(path.join(__dirname, '../../public/adminLoginPage.html'));
 });
 
+const verifyToken = require('../middleware/authMiddleware'); // Import the middleware
+
+// Get logged-in admin details (only for logged-in admin)
+router.get('/details', verifyToken, Admin.adminData);
+
 module.exports = router;

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     
     <script>
       const token = localStorage.getItem('token');
@@ -12,6 +12,7 @@
           window.location.href = '/adminLoginPage.html';
       }
     </script>
+
 
     <link rel="stylesheet" href="/styles/normalize.css">
     <link rel="stylesheet" href="/styles/global.css">
@@ -23,39 +24,42 @@
     <link rel="stylesheet" href="/styles/sections-style/appointments-section.css">
     <link rel="stylesheet" href="/styles/sections-style/inventory-section.css">
     <link rel="stylesheet" href="/styles/sections-style/setting-section.css">
-    <link rel="stylesheet" href="/styles/sections-style/calendar-section.css">
+    <link rel="stylesheet" href="/styles/sections-style/schedule-section.css">
 
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    
   </head>
   <body>
      <!-- header -->
     <header>
-      <div class="header__toggle-side-nav-icon">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
+      <div class="head-separate">
+        <div class="header__toggle-side-nav-icon">
+          <div class="line"></div>
+          <div class="line"></div>
+          <div class="line"></div>
+        </div>
+
+        <div class="header__swine-logo">
+          <img class="header__swine-logo-img" src="/images-and-icons/icons/swineGuard-logo.png" alt="img-logo">
+          <p class="header__swine-logo-label">Swine Guard</p>
+        </div>
       </div>
 
-      <div class="header__swine-logo">
-        <img class="header__swine-logo-img" src="/images-and-icons/icons/swineGuard-logo.png" alt="img-logo">
-        <p class="header__swine-logo-label">Swine Guard</p>
-      </div>
-
-      <form class="header__search">
-        <img class="header__search-icon" src="/images-and-icons/icons/search-icon.png" alt="search-icon"></img>
-        <input class="header__search-input" type="text" placeholder="Search...">   
-      </form>
 
       <div class="admin-profile">
         <img class="admin-profile__pic" src="/images-and-icons/images/vet logo.jpg" alt="admin-profile-pic" >
         <p class="admin-profile__label">ADMIN</p>
       </div>
-      <img class="header__arrow-down-icon" src="/images-and-icons/icons/arrow-down-icon.png" alt="arrow-down-icon" >
+      <!-- <img class="header__arrow-down-icon" src="/images-and-icons/icons/arrow-down-icon.png" alt="arrow-down-icon" >
 
       <div class="header__notification">
         <img class="header__notification-icon" src="/images-and-icons/icons/notification-icon.png" alt="notification-icon" >
         <p class="header__notification-number">1</p>
-      </div>
+      </div> -->
      
     </header>
 
@@ -63,7 +67,7 @@
       <!-- side-nav -->
       <nav class="side-nav">
         <ul class="side-nav__link-list">
-          <li class="side-nav__link focus" id="dashboard-link">
+          <li class="side-nav__link" id="dashboard-link">
             <img class="side-nav__link-icon" src="/images-and-icons/icons/dashboard-icon.png" alt="dashboard-icon">
             <p class="side-nav__link-label">Dashboard</p>
           </li>
@@ -75,10 +79,10 @@
             <img class="side-nav__link-icon" src="/images-and-icons/icons/appointment-icon.png" alt="appointments-icon">
             <p class="side-nav__link-label">Appointments</p>
           </li>
-          <li class="side-nav__link" id="database-link">
+          <!-- <li class="side-nav__link" id="database-link">
             <img class="side-nav__link-icon" src="/images-and-icons/icons/database-icon.png" alt="database-icon">
-            <p class="side-nav__link-label">Database</p>
-          </li>
+            <p class="side-nav__link-label">Users</p>
+          </li> -->
           <li class="side-nav__link" id="message-link">
             <img class="side-nav__link-icon" src="/images-and-icons/icons/messages-icon.png" alt="message-icon">
             <p class="side-nav__link-label">Messages</p>
@@ -101,19 +105,29 @@
       <!-- sections -->
       <div class="sections-wrapper">
 
+        <!-- Dashboard Section -->
         <section id="dashboard-section" class="dashboard-section">
-        
           <h1 class="section__heading">Manage Dashboards</h1>
-
           <div class="dashboard-nav">
-            <span>Population</span>
-            <span>Types</span>
-            <span>Appointments</span>
+            <div class="population-nav" id="population-nav">
+              <span>Population</span>
+              <img src="/images-and-icons/icons/population.png" alt="population">
+            </div>
+            <div class="types-nav" id="types-nav">
+              <span>Types</span>
+              <img src="/images-and-icons/icons/swine-type.png" alt="population">
+            </div>
+            <div class="appointment-nav" id="appointment-nav">
+              <span>Appointments</span>
+              <img src="/images-and-icons/icons/appointments_nav.png" alt="population">
+            </div>
           </div>
+
           <div class="dashboard-container">
-            <h3>Summary</h3> 
+            <h2>Summary</h2> 
 
             <div class="innerDashboard-container">
+              <!-- Left Chart -->
               <div class="side-chart">
                 <div class="chart-container">
                   <h4>Total Appoinments: <span id="all-appointments">No appointments</span> </h4> 
@@ -153,7 +167,7 @@
                   </div>
                 </div>
               </div>
-
+              <!-- Right Chart -->
               <div class="side-chart">
                 <div class="chart-container vertical">
                   <h4>Status Chart</h4>
@@ -165,7 +179,7 @@
                 <div class="chart-container vertical">
                   <h4>Services</h4>
                     <div class="verticalchart-container" id="verticalchart-container">
-                      <!-- Donut Chart here -->
+                      <!-- Vertical Chart here -->
                     </div>
                 </div>
               </div>
@@ -173,14 +187,32 @@
             </div>
 
           </div>
+
         </section>
 
+        <!-- Schedule Section -->
         <section id="schedule-section" class="schedule-section">
-          <div id='calendar'>No Content</div>
+          <h1 class="section__heading">Manage Schedules</h1>
+          <div id="calendar"></div>
+
+          <!-- Popup modal -->
+          <div id="schedulePopup" class="schedulePopup">
+            <h3 class="selectedDate">Schedule for <span id="selectedDate"></span></h3>
+            <div id="timeSlots" class="timeSlots"></div>
+            <button onclick="closePopup()">Close</button>
+          </div>
+
+          <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999;" onclick="closePopup()"></div>
+
         </section>
 
+        <!-- Appointment Section -->
         <section id="appointments-section" class="appointment-section">
           <h1 class="section__heading">Manage Appointments</h1>
+          <form class="header__search">
+            <img class="header__search-icon" src="/images-and-icons/icons/search-icon.png" alt="search-icon"></img>
+            <input class="header__search-input" type="text" placeholder="Search...">   
+          </form>
           <!-- filter-appointment and add appointments buttons -->
           <div class="select-and-btn-container">
             <select class="select-and-btn-container__filter-apointments-status" name="appointment-filter" id="appointment-filter">
@@ -257,7 +289,7 @@
           <!-- Appointment Table -->
           <div class="manage-appointments-table">
               <div class="manage-appointments-table__thead"> <!-- table head -->
-              <p class="th full-name">First Name</p>
+              <p class="th full-name">Client Name</p>
               <p class="th contact">Contact</p>
               <p class="th date-time">Date & Time</p>
               <p class="th status">Status</p>
@@ -299,32 +331,434 @@
             <label for="vet-message">Message</label>
             <textarea name="" id="vet-message"></textarea>
             <div class="appointment-accept-form__buttons">
-              <a href="#" class="appointment-accept-form__check-sched-btn">Check Schedules</a>
+              <a href="#" class="appointment-accept-form__check-sched-btn" id="check-schedule">Check Schedules</a>
                 <button class="appointment-accept-form__save-btn" type="submit">Save</button>
                 <button class="appointment-accept-form__cancel-btn" id="cancel-btn">Cancel</button>
             </div>
           </form>
-        
 
         <div class="modal-overlay hide" id="modal-overlay"></div>
 
         </section>
 
         <section id="database-section">No Content</section>
-        <section id="messages-section">No Content</section>
 
-        <section id="inventory-section">No Content</section>
-        <section id="setting-section">No Content</section>
+        <!-- Message Section -->
+        <section id="messages-section">
+          <div class="messages-section__main-wrapper">
+            <div class="sidebar-chat-panel"> <!-- side-chat-panel -->
+              <h1 class="section__heading">Messages</h1>
+              <div class="sidebar-chat-panel__search">
+                <img class="sidebar-chat-panel__search-icon" src="images-and-icons/icons/search-icon.png" alt="search-icon">
+                  <input class="sidebar-chat-panel__search-input" type="text" placeholder="Search...">  
+              </div>
+              <div class="chat-list">
+                <div class="chat-list__user">
+                  <img class="chat-list__user-image" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image">
+                  <p class="chat-list__user-name-and-message">
+                    <span class="chat-list__user-name">John Harvey</span>
+                    <span class="chat-list__user-message">Hello Goodmoring</span>
+                  </p>  
+                  <p class="chat-list__user-last-active-time">2 min.</p>
+                  <p class="chat-list__user-number-of-message">3</p>
+                </div>
+                <div class="chat-list__user">
+                  <img class="chat-list__user-image" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image">
+                  <p class="chat-list__user-name-and-message">
+                    <span class="chat-list__user-name">John Harvey</span>
+                    <span class="chat-list__user-message">Hello Goodmoring</span>
+                  </p>  
+                  <p class="chat-list__user-last-active-time">2 min.</p>
+                  <p class="chat-list__user-number-of-message">3</p>
+                </div>
+                <div class="chat-list__user">
+                  <img class="chat-list__user-image" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image">
+                  <p class="chat-list__user-name-and-message">
+                    <span class="chat-list__user-name">John Harvey</span>
+                    <span class="chat-list__user-message">Hello Goodmoring</span>
+                  </p>  
+                  <p class="chat-list__user-last-active-time">2 min.</p>
+                  <p class="chat-list__user-number-of-message">3</p>
+                </div>
+                <div class="chat-list__user">
+                  <img class="chat-list__user-image" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image">
+                  <p class="chat-list__user-name-and-message">
+                    <span class="chat-list__user-name">John Harvey</span>
+                    <span class="chat-list__user-message">Hello Goodmoring</span>
+                  </p>  
+                  <p class="chat-list__user-last-active-time">2 min.</p>
+                  <p class="chat-list__user-number-of-message">3</p>
+                </div>
+                <div class="chat-list__user">
+                  <img class="chat-list__user-image" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image">
+                  <p class="chat-list__user-name-and-message">
+                    <span class="chat-list__user-name">John Harvey</span>
+                    <span class="chat-list__user-message">Hello Goodmoring</span>
+                  </p>  
+                  <p class="chat-list__user-last-active-time">2 min.</p>
+                  <p class="chat-list__user-number-of-message">3</p>
+                </div>
+                <div class="chat-list__user">
+                  <img class="chat-list__user-image" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image">
+                  <p class="chat-list__user-name-and-message">
+                    <span class="chat-list__user-name">John Harvey</span>
+                    <span class="chat-list__user-message">Hello Goodmoring</span>
+                  </p>  
+                  <p class="chat-list__user-last-active-time">2 min.</p>
+                  <p class="chat-list__user-number-of-message">3</p>
+                </div>
+                <div class="chat-list__user">
+                  <img class="chat-list__user-image" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image">
+                  <p class="chat-list__user-name-and-message">
+                    <span class="chat-list__user-name">John Harvey</span>
+                    <span class="chat-list__user-message">Hello Goodmoring</span>
+                  </p>  
+                  <p class="chat-list__user-last-active-time">2 min.</p>
+                  <p class="chat-list__user-number-of-message">3</p>
+                </div>
+                <div class="chat-list__user">
+                  <img class="chat-list__user-image" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image">
+                  <p class="chat-list__user-name-and-message">
+                    <span class="chat-list__user-name">John Harvey</span>
+                    <span class="chat-list__user-message">Hello Goodmoring</span>
+                  </p>  
+                  <p class="chat-list__user-last-active-time">2 min.</p>
+                  <p class="chat-list__user-number-of-message">3</p>
+                </div>
+              </div>
+            </div>
+            <div class="chat-box"> <!-- convo box -->
+              <div class="chat-box__header">
+                <img  class="chat-box__header-user-img" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-img">
+                <div class="chat-box__header-user-name-and-active-status">
+                  <p class="chat-box__header-user-name">John Harvey</p>
+                  <p class="chat-box__header-user-active-status">
+                    <span class="chat-box__header-user-active-status--dot"></span>
+                    <span class="chat-box__header-user-active-status--label">Active</span>
+                  </p>
+                </div>
+                <i class="chat-box__header-more-details-icon fas fa-ellipsis-v"></i> 
+              </div>
+              <div class="convo-list">
+                <div class="convo-list__user-chat"> <!-- user chat -->
+                  <div class="convo-list__user-chat-time-sent time-sent">7:00 AM</div>
+                  <div class="convo-list__user-chat-details">
+                    <img class="convo-list__user-chat-details--img" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image" >
+                    <p class="convo-list__user-chat-details--name">John</p>
+                  </div>
+                  <p class="convo-list__user-chat-message chat-message">Hello Goodmorning</p>
+                </div>
+                <div class="convo-list__admin-chat"> <!-- admin chat -->
+                  <p class="convo-list__admin-chat-time-sent time-sent">8:00 AM</p>
+                  <p class="convo-list__admin-chat-message chat-message">Hello This is veterenary admin</p>
+                </div>
+                <div class="convo-list__user-chat"> <!-- user chat -->
+                  <div class="convo-list__user-chat-time-sent time-sent">7:00 AM</div>
+                  <div class="convo-list__user-chat-details">
+                    <img class="convo-list__user-chat-details--img" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image" >
+                    <p class="convo-list__user-chat-details--name">John</p>
+                  </div>
+                  <p class="convo-list__user-chat-message chat-message">Hello Goodmorning</p>
+                </div>
+                <div class="convo-list__admin-chat"> <!-- admin chat -->
+                  <p class="convo-list__admin-chat-time-sent time-sent">8:00 AM</p>
+                  <p class="convo-list__admin-chat-message chat-message">Hello This is veterenary admin</p>
+                </div>
+                <div class="convo-list__user-chat"> <!-- user chat -->
+                  <div class="convo-list__user-chat-time-sent time-sent">7:00 AM</div>
+                  <div class="convo-list__user-chat-details">
+                    <img class="convo-list__user-chat-details--img" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image" >
+                    <p class="convo-list__user-chat-details--name">John</p>
+                  </div>
+                  <p class="convo-list__user-chat-message chat-message">Hello Goodmorning</p>
+                </div>
+                <div class="convo-list__admin-chat"> <!-- admin chat -->
+                  <p class="convo-list__admin-chat-time-sent time-sent">8:00 AM</p>
+                  <p class="convo-list__admin-chat-message chat-message">Hello This is veterenary admin</p>
+                </div>
+                <div class="convo-list__user-chat"> <!-- user chat -->
+                  <div class="convo-list__user-chat-time-sent time-sent">7:00 AM</div>
+                  <div class="convo-list__user-chat-details">
+                    <img class="convo-list__user-chat-details--img" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image" >
+                    <p class="convo-list__user-chat-details--name">John</p>
+                  </div>
+                  <p class="convo-list__user-chat-message chat-message">Hello Goodmorning</p>
+                </div>
+                <div class="convo-list__admin-chat"> <!-- admin chat -->
+                  <p class="convo-list__admin-chat-time-sent time-sent">8:00 AM</p>
+                  <p class="convo-list__admin-chat-message chat-message">Hello This is veterenary admin</p>
+                </div>
+                <div class="convo-list__user-chat"> <!-- user chat -->
+                  <div class="convo-list__user-chat-time-sent time-sent">7:00 AM</div>
+                  <div class="convo-list__user-chat-details">
+                    <img class="convo-list__user-chat-details--img" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image" >
+                    <p class="convo-list__user-chat-details--name">John</p>
+                  </div>
+                  <p class="convo-list__user-chat-message chat-message">Hello Goodmorning</p>
+                </div>
+                <div class="convo-list__admin-chat"> <!-- admin chat -->
+                  <p class="convo-list__admin-chat-time-sent time-sent">8:00 AM</p>
+                  <p class="convo-list__admin-chat-message chat-message">Hello This is veterenary admin</p>
+                </div>
+                <div class="convo-list__user-chat"> <!-- user chat -->
+                  <div class="convo-list__user-chat-time-sent time-sent">7:00 AM</div>
+                  <div class="convo-list__user-chat-details">
+                    <img class="convo-list__user-chat-details--img" src="images-and-icons/images/example-user-profile-pic.jpg" alt="user-image" >
+                    <p class="convo-list__user-chat-details--name">John</p>
+                  </div>
+                  <p class="convo-list__user-chat-message chat-message">Hello Goodmorning</p>
+                </div>
+                <div class="convo-list__admin-chat"> <!-- admin chat -->
+                  <p class="convo-list__admin-chat-time-sent time-sent">8:00 AM</p>
+                  <p class="convo-list__admin-chat-message chat-message">Hello This is veterenary admin</p>
+                </div>
+              </div>
+              <form class="chat-box__chat-input-area"> <!-- chat input erea-->
+                <!-- Attachment icon and input -->
+                <label for="input-file" class="chat-input-area__input-file-icon" title="Attach a file">
+                  <i class="fas fa-paperclip"></i>
+                </label>
+                <input id="input-file" type="file" style="display: none;">
+                <!-- Text message input -->
+                <input class="chat-input-area__input-message" type="text" placeholder="Type a Message" required>
+                <!-- Image icon and input -->
+                <label for="input-image" class="chat-input-area__input-image-icon" title="Send an image">
+                  <i class="far fa-image"></i>
+                </label>
+                <input id="input-image" type="file" accept="image/*" style="display: none;">
+                <!-- Send button -->
+                <button class="chat-box__send-btn" type="submit" id="send-chat-btn" title="Send message">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- Inventory Section -->
+        <section id="inventory-section">
+          <h1 class="section__heading">Inventory</h1>   
+          <ul class="inventory-nav">
+            <li data-value="vaccines-table" class="inventory-nav__link active">Vaccine</li>
+            <li data-value="vitamins-table" class="inventory-nav__link">Vitamnins</li>
+          </ul>
+          <div data-value="vaccines-table" class="inventory-table--vaccines inventory-table"> <!--vaccine-table -->
+            <div class="inventory-vaccine-table__control-panel inventory-table__control-panel"> <!--control panel -->
+              <h1 class="control-panel__table-name">Vaccines</h1>
+              <div class="control-panel__search">
+                <img class="control-panel__search-icon" src="images-and-icons/icons/search-icon.png" alt="search-icon">
+                <input class="control-panel__search-input" type="text" placeholder="Find a vaccine">   
+              </div>
+              <div class="control-panel__sort">
+                <p class="control-panel__sort-label">Sort by:</p>
+                <select name="select-sort-category" id="select-sort-category" class="control-panel__sort-select-category">
+                  <option value="name">Name</option>
+                  <option value="manufacturer">Manufacturer</option>
+                  <option value="date-of-manufacture">Date of Manufacture</option>
+                  <option value="dose">Dose</option>
+                  <option value="status">Status</option>
+                </select>
+              </div>
+              <div class="control-panel__add-btn">
+                <i class="control-panel__add-vaccine-btn-icon control-panel__add-btn--icon fas fa-plus"></i>
+                <p class="control-panel__add-vaccine-btn-label control-panel__add-btn--label">Add Vaccine</p>
+              </div>              
+            </div>      
+            <div class="inventory-vaccine-table__thead inventory-table__thead"> <!-- Table Head -->
+              <div class="th th--batch-number">Item no.</div>
+              <div class="th th--name">Name</div>
+              <div class="th th--manufacturer">Manufacturer</div>
+              <div class="th th--date-manufacture">Date of Mfr</div>
+              <div class="th th--dose">Dose</div>
+              <div class="th th--quantity">No. of Vax.</div>
+              <div class="th th--expiration">Exp Date</div>
+              <div class="th th--status">Status</div>
+              <div class="th th--actions"> <!-- Actions --> </div>
+            </div>
+            
+            <div class="inventory-vaccine-table__tbody inventory-table__tbody"> <!-- Table Body -->
+              <div class="vaccine table-body__table-row">
+                <div class="td td--batch-number">2024C50</div>
+                <div class="td td--name">Coglapest</div>
+                <div class="td td--manufacturer">Univet</div>
+                <div class="td td--date-manufacture">01.01.2024</div>
+                <div class="td td--dose">1 mL</div>
+                <div class="td td--quantity">100 pcs</div>
+                <div class="td td--expiration">01.01.2026</div>
+                <div class="td td--status">active</div>
+                <div class="td td--actions">
+                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
+                  <div class="buttons-container">
+                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
+                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
+                  </div>
+                </div>
+              </div>
+              <div class="vaccine table-body__table-row">
+                <div class="td td--batch-number">2024C50</div>
+                <div class="td td--name">Coglapest</div>
+                <div class="td td--manufacturer">Univet</div>
+                <div class="td td--date-manufacture">01.01.2024</div>
+                <div class="td td--dose">1 mL</div>
+                <div class="td td--quantity">100 pcs</div>
+                <div class="td td--expiration">01.01.2026</div>
+                <div class="td td--status">active</div>
+                <div class="td td--actions">
+                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
+                  <div class="buttons-container">
+                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
+                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
+                  </div>
+                </div>
+              </div>
+              <div class="vaccine table-body__table-row">
+                <div class="td td--batch-number">2024C50</div>
+                <div class="td td--name">Coglapest</div>
+                <div class="td td--manufacturer">Univet</div>
+                <div class="td td--date-manufacture">01.01.2024</div>
+                <div class="td td--dose">1 mL</div>
+                <div class="td td--quantity">100 pcs</div>
+                <div class="td td--expiration">01.01.2026</div>
+                <div class="td td--status">active</div>
+                <div class="td td--actions">
+                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
+                  <div class="buttons-container">
+                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
+                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+                       
+          </div>
+
+          <div data-value="vitamins-table" class="inventory-table--vitamins inventory-table"> <!-- vitamins-table -->
+            <div class="inventory-vitamins-table__control-panel inventory-table__control-panel">
+              <h1 class="control-panel__table-name">Vitamins</h1>
+              <div class="control-panel__search">
+                <img class="control-panel__search-icon" src="images-and-icons/icons/search-icon.png" alt="search-icon">
+                <input class="control-panel__search-input" type="text" placeholder="Find a vitamins">   
+              </div>
+              <div class="control-panel__sort">
+                <p class="control-panel__sort-label">Sort by:</p>
+                <select name="select-sort-category" id="select-sort-category" class="control-panel__sort-select-category">
+                  <option value="name">Name</option>
+                  <option value="manufacturer">Manufacturer</option>
+                  <option value="date-of-manufacture">Date of Manufacture</option>
+                  <option value="dose">Dose</option>
+                  <option value="status">Status</option>
+                </select>
+              </div>
+              <div class="control-panel__add-btn">
+                <i class="control-panel__add-vitamins-btn-icon control-panel__add-btn--icon fas fa-plus"></i>
+                <p class="control-panel__add-vitamins-btn-label control-panel__add-btn--label">Add vitamins</p>
+              </div>              
+            </div>      
+            <div class="inventory-vaccine-table__thead inventory-table__thead"> <!-- Table Head -->
+              <div class="th th--batch-number">Batch#</div>
+              <div class="th th--name">Name</div>
+              <div class="th th--manufacturer">Manufacturer</div>
+              <div class="th th--date-manufacture">Date of Mfr</div>
+              <div class="th th--dose">Dose</div>
+              <div class="th th--quantity">No. of Vax.</div>
+              <div class="th th--expiration">Exp Date</div>
+              <div class="th th--status">Status</div>
+              <div class="th th--actions"> <!-- Actions --> </div>
+            </div>
+            
+            <div class="inventory-vaccine-table__tbody inventory-table__tbody"> <!-- Table Body -->
+              <div class="vaccine table-body__table-row">
+                <div class="td td--batch-number">2024C150</div>
+                <div class="td td--name">Bexan SP</div>
+                <div class="td td--manufacturer">Univet</div>
+                <div class="td td--date-manufacture">01.01.2024</div>
+                <div class="td td--dose">1 mL</div>
+                <div class="td td--quantity">250 pcs</div>
+                <div class="td td--expiration">01.01.2026</div>
+                <div class="td td--status">active</div>
+                <div class="td td--actions">
+                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
+                  <div class="buttons-container">
+                    <button class="buttons-container__edit-btn edit-vitamins-btn">Edit</button>
+                    <button class="buttons-container__delete-btn delete-vitamins-btn">Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>               
+          </div>
+        </section>
+
+        <!-- Setting section -->
+        <section id="setting-section">
+          <input type="hidden" id="adminID" data-admin-id=""><!--Id for the admin-->
+          <h1 class="section__heading">Setting</h1>
+          <div class="setting-section__main-wrapper">
+            <ul class="setting-nav">
+              <li class="setting-nav__link active">Profile</li>
+              <li class="setting-nav__link">General</li>
+              <li class="setting-nav__link">Notification</li>
+            </ul>
+            <form class="setting-panel profile-panel">  <!--profile setting panel -->
+              <div class="profile-panel__header">
+                <div class="profile-panel__admin-photo">
+                  <img class="profile-panel__admin-photo--img" src="images-and-icons/images/vet logo.jpg" alt="admin-img" >
+                  <label for="input-image" class="profile-panel__admin-photo--input-img-icon" title="Send an image">
+                    <i class="far fa-plus"></i>
+                  </label>
+                  <input id="input-image" type="file" accept="image/*" style="display: none;">
+                </div>
+                <button type="button" class="profile-panel__edit-btn">
+                  <i class="profile-panel__edit-btn--icon fas fa-edit"></i> 
+                  <span class="profile-panel__edit-btn--label">Edit</span>
+                </button>
+              </div>        
+              <div class="profile-panel__detail profile-panel__detail--id">
+                <p class="profile-panel__detail-label">ID</p>
+                <p class="profile-panel__detail-value" id="admin-id"></p>
+              </div>
+              <div class="profile-panel__detail profile-panel__detail--name">
+                <p class="profile-panel__detail-label">Name</p>
+                <input class="profile-panel__detail-value" readonly value="" id="admin-name">
+              </div>
+              <div class="profile-panel__detail profile-panel__detail--contact">
+                <p class="profile-panel__detail-label">Contact</p>
+                <input class="profile-panel__detail-value" readonly value="" id="admin-contact">
+              </div>
+              <div class="profile-panel__detail profile-panel__detail--adress">
+                <p class="profile-panel__detail-label">Adress</p>
+                <input class="profile-panel__detail-value" readonly value="" id="admin-address">
+              </div>
+              <div class="profile-panel__detail profile-panel__detail--email">
+                <p class="profile-panel__detail-label">Email</p>
+                <input class="profile-panel__detail-value" readonly value="" id="admin-email">
+              </div>
+              <div class="profile-panel__detail profile-panel__detail--password">
+                <p class="profile-panel__detail-label">Password</p>
+                <input class="profile-panel__detail-value" type="password" readonly value="" id="admin-password">
+              </div>
+
+              <div class="profile-panel__buttons">
+                <button type="submit" class="profile-panel__save-btn">Save Changes</button>
+                <button type="button" class="profile-panel__cancel-btn">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </section>
       </div>
     </main>
 
     <script src="/js/sideNav.js"></script>
-    <script src="/js/displayAppointment.js"></script>
-    <script src="/js/updateAppointment.js"></script>
-    <script src="/js/data.js"></script>
     <script src="/js/schedule.js"></script>
-    <script src="/js/dashboardChart.js"></script>
-    <script src="/js/admin.js"></script>
-    <script type="module" src="/js/addAppointment.js"></script>
+    <script src="/js/dashboard/dashboardChart.js"></script>
+    <!-- <script src="/js/dashboard/population.js"></script> -->
+    <script src="/js/message.js"></script>
+    <script src="/js/schedule.js"></script>
+    <script src="/js/adminlogin.js"></script>
+    <script src="/js/displayAdminDetails.js"></script>
+    <script src="/js/appointment/displayAppointment.js"></script>
+    <script src="/js/appointment/updateAppointment.js"></script>
+    <script src="/js/appointment/data.js"></script>
+    <script src="/js/appointment/checkSchedule.js"></script>
+    <script type="module" src="/js/appointment/addAppointment.js"></script>
   </body>
 </html>

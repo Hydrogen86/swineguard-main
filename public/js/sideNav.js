@@ -8,7 +8,7 @@ const inventorySection = document.getElementById('inventory-section');
 const settingSection = document.getElementById('setting-section');
 
 const dashboardLink = document.getElementById('dashboard-link');
-const databaseLink = document.getElementById('database-link');
+// const databaseLink = document.getElementById('database-link');
 const messageLink = document.getElementById('message-link');
 const scheduleLink = document.getElementById('schedule-link');
 const appointmentLink = document.getElementById('appointment-link');
@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function () { setupSideNavBehavior
   function setupSideNavBehavior() {
     const sections = [
       dashboardSection,
-      databaseSection,
       messageSection,
       scheduleSection,
       appointmentSection,
@@ -30,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function () { setupSideNavBehavior
   
     const links = [
       dashboardLink,
-      databaseLink,
       messageLink,
       scheduleLink,
       appointmentLink,
@@ -48,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () { setupSideNavBehavior
         sections[index].style.display = 'block';
   
         // Reset all link backgrounds
-        links.forEach(l => l.style.backgroundColor = '#17e476');
+        links.forEach(l => l.style.backgroundColor = '#2FC375');
   
         // Highlight the active link
         link.style.backgroundColor = '#09984c';
@@ -58,5 +56,5 @@ document.addEventListener('DOMContentLoaded', function () { setupSideNavBehavior
     // Optional: set default view
     sections.forEach(section => section.style.display = 'none');
     sections[0].style.display = 'block';
-    links[0].style.backgroundColor = '#17e476';
+    links[0].style.backgroundColor = '#2FC375';
 }

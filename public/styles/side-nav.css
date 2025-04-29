@@ -2,7 +2,7 @@
 .side-nav{
   position: fixed;
   bottom: 0;
-  background-color: #17e476;
+  background-color: #2FC375;
   top: var(--header-height);
   width: var(--sidenav-width); /* variable is in the body */
   padding-top: 2.5rem;

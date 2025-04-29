@@ -36,7 +36,7 @@ exports.addAppointment = async (req, res) => {
 }
 
 //GET ALL APPOINTMENTS
-exports.getAllAppointments= async (req, res) => {
+exports.getAllAppointments = async (req, res) => {
     try {
         const appointments = await appointmentRequest.find();
         res.status(200).json(appointments);

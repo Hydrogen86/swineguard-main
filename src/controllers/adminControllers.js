@@ -33,3 +33,31 @@ exports.loginAdmin = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 }
+
+//get admin data
+exports.adminData = async (req, res) => {
+    try {
+        // Get the logged-in admin by ID (assuming JWT token is used)
+        const adminData = await Admin.findById(req.user.userId);
+
+        if (!adminData) {
+            return res.status(404).json({ error: 'Admin not found' });
+        }
+
+        // Add fullName to the response object
+        const adminResponse = {
+            _id: adminData._id,
+            firstName: adminData.firstName,
+            middleName: adminData.middleName,
+            lastName: adminData.lastName,
+            adminContact: adminData.adminContact,
+            adminAddress: adminData.adminAddress,
+            adminEmail: adminData.adminEmail,
+            adminPassword: adminData.adminPassword
+        };
+
+        res.status(200).json(adminResponse);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}

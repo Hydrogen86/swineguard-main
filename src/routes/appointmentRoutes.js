@@ -3,6 +3,7 @@ const path = require('path');
 const router = express.Router();
 const appointmentController = require('../../src/controllers/appointmentControllers');
 
+
 // @route   GET /api/appointments
 // @desc    Get all appointment records
 // @access  Public or Protected (depending on auth setup)

@@ -5,7 +5,7 @@ require('module-alias/register');
 const connectionDB = require('./src/config/db');
 const appointment = require('./src/models/appointment');
 const cors = require('cors');
-const verifyToken = require('./src/middleware/adminHomepage');
+const verifyToken = require('./src/middleware/authMiddleware');
 
 require('dotenv').config();
 const app = express();

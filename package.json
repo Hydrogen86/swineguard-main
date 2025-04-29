@@ -7,12 +7,14 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
+    "@fullcalendar/interaction": "^6.1.17",
     "apexcharts": "^4.5.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "fullcalendar": "^6.1.17",
     "jsonwebtoken": "^9.0.2",
     "module-alias": "^2.2.3",
     "mongoose": "^8.13.2",
