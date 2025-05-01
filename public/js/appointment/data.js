@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const appointmentTitle = document.getElementById('appointment-title');
     const swineType = document.getElementById('swine-type');
-    const medicineList = document.getElementById('medicine-list');
+    // const medicineList = document.getElementById('medicine-list');
     const personnelList = document.getElementById('available-personnel');
     const municipalitySelect = document.getElementById('municipality');
     const barangaySelect = document.getElementById('barangay');
@@ -69,24 +69,48 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Error loading swine type data:', error);
         });
 
-    //Load swine medicines from external JSON file
-    fetch ('http://localhost:5000/api/medicines')
+    // //Load swine medicines from external JSON file
+    // fetch ('http://localhost:5000/api/medicines')
+    // .then(response => response.json())
+    // .then(data => {
+    //     const medicines = data.Medicine.swineVaccines;
+
+    //     medicineList.innerHTML = '<option value="">Medicine here.</option>';
+    //     medicines.forEach(meds => {
+    //         const option = document.createElement('option');
+    //         option.value = meds;
+    //         option.textContent = meds;
+    //         medicineList.appendChild(option);
+    //     });
+
+    // })
+    // .catch(error => {
+    //     console.error('Error loading swine type data:', error);
+    // });
+
+    // Load swine medicines from external JSON file
+    fetch('http://localhost:5000/api/get/item')
     .then(response => response.json())
     .then(data => {
-        const medicines = data.Medicine.swineVaccines;
+    // Create a dropdown menu with the item names
+    const medicineList = document.getElementById('medicine-list'); // Ensure this is your <select> element
+    
 
-        medicineList.innerHTML = '<option value="">Medicine here.</option>';
-        medicines.forEach(meds => {
-            const option = document.createElement('option');
-            option.value = meds;
-            option.textContent = meds;
-            medicineList.appendChild(option);
-        });
+    medicineList.innerHTML = '<option value="">Select a Medicine</option>'; // Default placeholder
 
+    // Loop through the medicines array and populate the dropdown with item names
+    data.forEach(med => {
+        const option = document.createElement('option');
+        option.value = med.itemName;  // Set the value to itemName
+        option.textContent = med.itemName;  // Set the visible text to itemName
+        medicineList.appendChild(option);
+    });
     })
     .catch(error => {
-        console.error('Error loading swine type data:', error);
+    console.error('Error loading swine type data:', error);
     });
+
+
 
     //Load vet personnel from external JSON file
     fetch ('http://localhost:5000/api/personnel')

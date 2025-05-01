@@ -35,6 +35,40 @@
 
       </div>
 
+      <!-- Add Inventory -->
+      <form class="appointment-accept-form" >
+        <h2 class="appointment-accept-form__heading">Add Inventory</h2>
+        <!--<input type="hidden" id="inventoryID" data-inventory-id="">Id for the Inventory-->
+        <div class="appointment-accept-form__details-columns">
+          <div class="column-left">
+            <label for="item-name">Item Name</label>
+            <input type="text" id="item-name" value="" required>
+            <label for="stock-amount">Amount(mg)</label>
+            <input type="number" min="0" id="stock-amount" required>
+            <label for="quantity">Quantity</label>
+            <input type="number" min="0" id="quantity" required>
+          </div>
+          <div class="column-right">
+            <label for="expiry-date">Expiry Date</label>
+            <input type="date" id="expiry-date" required>
+            <label for="medicine-list">Select Medicine</label>
+            <select name="" id="medicine-list">
+            <label for="stock-type">Types</label>
+            <select name="" id="stock-type">
+                <option value="">Descriprion</option>
+                <option value="Deworming">Deworming</option>
+                <option value="Iron Supplement">Iron Supplement</option>
+                <option value="Anti Malaria">Anti Malaria</option>
+                <option value="Antibiotics">Antibiotics</option>
+                <option value="Probiotics">Probiotics</option>
+                <option value="Vitamins">Vitamins</option>
+                <option value="Parasiticides">Parasiticides</option>
+                <option value="Sedatives & Analgesics">Sedatives & Analgesics</option>
+            </select>
+          </div>
+        </div>
+      </form>
+
       
 </body>
 </html>

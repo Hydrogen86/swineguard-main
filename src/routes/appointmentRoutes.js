@@ -3,11 +3,6 @@ const path = require('path');
 const router = express.Router();
 const appointmentController = require('../../src/controllers/appointmentControllers');
 
-
-// @route   GET /api/appointments
-// @desc    Get all appointment records
-// @access  Public or Protected (depending on auth setup)
-
 //Add appointments
 router.post('/request/appointments', appointmentController.addAppointment);
 
@@ -20,6 +15,9 @@ router.get('/services', appointmentController.getAllServices);
 router.get('/swines', appointmentController.getAllSwineType);
 router.get('/medicines', appointmentController.getAllMedicines);
 router.get('/personnel', appointmentController.getAllPersonnel);
+
+//get userEmail using id
+router.get('/email/:id', appointmentController.getClientEmail);
 
 
 //update appointments by Id completed, accepted, rejected, removed, restore and delete

@@ -172,11 +172,24 @@ exports.getAllMedicines = async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 }
+
 //Send all vet personnel from stocks as of now from json file
 exports.getAllPersonnel = async (req, res) => {
     try {
         res.status(200).json(vetPersonnel)
     } catch (error) {
         res.status(500).json({ message: error.message })
+    }
+}
+
+//get user email using id
+exports.getClientEmail = async (req, res) => {
+    try {
+        const appointment = await appointmentRequest.findById(req.params.id); // using appointment model
+        if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
+
+        res.json({ email: appointment.clientEmail }); // get client email from the appointment
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
     }
 }
