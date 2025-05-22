@@ -1,9 +1,3 @@
-const idInputBox = document.getElementById('admin-id');
-const nameInputBox = document.getElementById('admin-name');
-const contactInputBox = document.getElementById('admin-contact');
-const addressInputBox = document.getElementById('admin-address');
-const emailInputBox = document.getElementById('admin-email');
-
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
 
@@ -31,11 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (admin) {
             idInputBox.textContent = admin._id;
             nameInputBox.value = `${admin.firstName} ${admin.middleName} ${admin.lastName}`;
-            contactInputBox.value = admin.adminContact;
-            addressInputBox.value = admin.adminAddress;
-            emailInputBox.value = admin.adminEmail;
-            passwordInputBox.value = admin.adminPassword;
+            contactInputBox.value = admin.contact;
+            addressInputBox.value = `${admin.barangay}, ${admin.municipality}`;
+            emailInputBox.value = admin.email;
+            passwordInputBox.value = admin.password;
+            
         }
+        
+        // console.log(token);
     })
     .catch(error => {
         console.error('Error loading admin details', error);

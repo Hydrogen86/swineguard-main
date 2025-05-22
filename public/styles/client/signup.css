@@ -1,0 +1,52 @@
+.signup-container, .login-container {
+    border: 2px solid #4d4d4dd5;
+    padding: 2rem;
+    width: 500px;
+}
+/* .user-name, .user-contact, .user-email, .user-agreement {
+    
+} */
+.user-contact, .user-email, .user-agreement, .signup-container {
+    display: none;
+}
+#login-link, #signup-link {
+    color: blueviolet;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.main-wrapper {
+    display: grid;
+    place-items: center; /* shorthand for justify-items and align-items */
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+h1 {
+    text-align: center;
+    margin: 2rem 0;
+}
+.gender-container, .gender-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+input, select {
+    font-size: 1rem;
+    /* margin-bottom: 1rem; */
+    width: 100%;
+    padding: .2rem .4rem;
+}
+
+button {
+    padding: .5rem 1rem;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+select {
+    margin-bottom: .4rem;
+}

@@ -47,6 +47,13 @@
   overflow: hidden;
   height: 45rem;
   font-size: 0.9rem;
+
+  /* STRICT layout */
+  /*min-width: 930px;  Based on total column widths */
+  /*width: fit-content; /* Keep layout from shrinking */
+
+  /* Enable scrolling in smaller screens */
+  /*overflow-x: auto;*/
 }
 
 /* table head */
@@ -135,6 +142,7 @@
   color: #015e2c;
   border-radius: 20px;
   padding: 0.2rem 0;
+  /* color: #f8d6aab7; */
 }
 .manage-appointments-table__tbody .td.action {
   width: var(--action-width);
@@ -307,7 +315,7 @@
   border: none;
   border-radius: 5px;
   padding: 10px 25px;
-  margin-top: 1rem;
+  margin-top: 7rem;
 }
 
 

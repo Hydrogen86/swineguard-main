@@ -36,33 +36,47 @@ document.addEventListener('DOMContentLoaded', () => {
 async function loginAdmin() {
     try {
         const adminData = {
-            adminEmail: document.getElementById('login-email').value,
-            adminPassword: document.getElementById('login-password').value
+            email: document.getElementById('login-email').value,
+            password: document.getElementById('login-password').value
         }
-        // Something to fetch
-        const response = await fetch( 'http://localhost:5000/api/admin/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify( adminData )
-        });
 
-        const data = await response.json();
-        if(response.ok) {
-            alertMsg('Success', 'Login successfully', 'success');
-            localStorage.setItem('token', data.token);
+        const response = await axios.post( 'http://localhost:5000/api/admin/login', adminData);
 
-            // 🔹 Redirect to Homepage.html after 1.5 seconds
-            setTimeout(() => {
-                window.location.href = `/adminHomepage?token=${data.token}`;
-            }, 1500);
+        const data = response.data;
+
+        alertMsg('Success', 'Login successfully', 'success');
+        localStorage.setItem('token', data.token);
+
+        // ✅ Use role to determine homepage
+        let homepage = '';
+
+        switch (data.user.role) {
+            case 'admin':
+                homepage = '/admin/homepage';
+                break;
+            case 'ac_staff':
+                homepage = '/ac/homepage';
+                break;
+            case 'ic_staff':
+                homepage = '/ic/homepage';
+                break;
+            default:
+                alertMsg('Error', 'Unauthorized role', 'error');
+                console.log('Role from backend:', data.role);
+                return;
         }
-        else {
-            showAlert('Error', data.error, 'error');
-        }
+
+        // 🔁 Redirect after 1.5s
+        setTimeout(() => {
+            window.location.href = homepage;
+        }, 1500);
 
     } catch (err) {
-        alertMsg('Error', 'Something went wrong. Please try again.', 'error');
+        // alertMsg('Error', 'Login Failed. Please try again.', 'error');
+        const errorMsg = err.response?.data?.error || 'Login Failed. Please try again.';
+        alertMsg('Error', errorMsg, 'error');
     }
+
 }
 
 

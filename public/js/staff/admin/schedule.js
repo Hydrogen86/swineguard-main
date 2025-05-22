@@ -48,14 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function loadCalendarEvents() {
   const calendarEvents = clientAppointments
     .filter(app => app.appointmentStatus === 'ongoing')
-    // .map(app => ({
-    //   title: '',
-    //   start: app.appointmentDate,
-    //   allDay: true,
-    //   backgroundColor: '#2196F3', // Blue color for ongoing
-    //   borderColor: '#2196F3',
-    //   display: 'block'
-    // }));
     .map(app => ({
       title: app.appointmentTitle,  // <-- ADD the title text here
       start: app.appointmentDate,

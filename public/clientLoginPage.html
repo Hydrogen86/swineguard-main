@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link rel="stylesheet" href="./styles/global.css">
+    <link rel="stylesheet" href="./styles/client/signup.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+    <div class="main-wrapper">
+        <!-- Login Page -->
+        <div class="login-container">
+            <form id="login-form">
+                <h1>LOG IN</h1>
+                <label for="login-email">Email: </label><br>
+                <input type="email" id="login-email" required placeholder="Enter here."><br>
+
+                <label for="login-password">Password: </label><br>
+                <input type="password" id="login-password" required placeholder="Enter here."><br>
+
+                <button id="login-btn" type="submit">LOGIN</button><br>
+                <span>Don't have an account? <span id="signup-link">Sign-up</span></span>
+            </form>
+        </div>
+
+        <!-- Sign-up Page -->
+        <div class="signup-container">
+            <form id="signup-form">
+                <h1>SIGN UP</h1>
+                <!-------Names------->
+                <div class="user-info">
+                    <h2>Personal Information</h2>
+                    <label for="fname">First Name: </label><br>
+                    <input type="text" id="fname" placeholder="Enter here." required><br>
+                    <label for="m-name">Middle Name: </label><br>
+                    <input type="text" id="mname" placeholder="Enter here." ><br>
+                    <label for="lname">Last Name: </label><br>
+                    <input type="text" id="lname" placeholder="Enter here." required>
+                    <label for="suffix">Suffix: </label>
+                    <input type="text" id="suffix" placeholder="Enter here."><br>
+
+                    <!--Gender-->
+                    <div class="gender-container">
+                        <label for="">Gender: </label>
+                        <div class="gender-box">
+                            <input type="radio" id="male" name="gender" value="Male">
+                            <label for="male">Male</label>
+                        </div>
+                        <div class="gender-box">
+                            <input type="radio" id="female" name="gender" value="Female">
+                            <label for="female">Female</label>
+                        </div>
+                    </div>
+
+                    <button class="next-btn">Next</button>
+                </div>
+                
+
+                <div class="user-contact">
+                    <h2>Contacts</h2>
+                    <label for="phone">Phone: </label><br>
+                    <input type="tel" id="phone" placeholder="Enter here." pattern="^09\d{9}$" maxlength="11" required><br>
+                    <!--Address-->
+                    <h4>Address</h4>
+                    <select id="municipality" name="">
+                        <option value="">Municipality</option>
+                    </select>
+                    <select id="barangay" name="" disabled>
+                        <option value="">Barangay</option>
+                    </select>
+
+                    <button class="next-btn">Next</button>
+                </div>
+
+                <!-------Emails------->
+                <div class="user-email">
+                    <h2>Email</h2>
+                    <label for="user-email">Email: </label><br>
+                    <input type="text" id="user-email" placeholder="Enter here." required><br>
+                    <label for="user-password">Password: </label><br>
+                    <input type="password" id="user-password" placeholder="Enter here." required><br>
+                    <label for="confirm-password">Confrim Password: </label><br>
+                    <input type="password" id="confirm-password" placeholder="Enter here." required><br>
+
+                    <button class="next-btn">Next</button>
+                </div>
+
+                <div class="user-agreement">
+                    <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia veritatis repellat placeat, dicta quia blanditiis suscipit! Optio sint sunt cumque nemo laudantium saepe nostrum, laboriosam sequi, eaque explicabo, ad est!</span><br><br>
+                    <input type="checkbox" id="term-conditions" required>
+                    <label for="term-conditions">I accept terms and condition</label><br>
+                    <button type="submit" id="submit-btn">Create Account</button>
+                </div>
+
+                <span>Already have an account? <span id="login-link">Log-in</span></span>
+            </form>
+        </div>
+    </div>
+
+    <script src="./js/client/signup.js"></script>
+    <script src="./js//client/populateAddresses.js" defer></script>
+     
+</body>
+</html>

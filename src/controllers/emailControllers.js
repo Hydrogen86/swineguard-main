@@ -1,35 +1,6 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-// exports.sendAppointmentEmail = async (clientEmail, message) => {
-//     const transporter = nodemailer.createTransport({
-//         service: 'gmail',
-//         auth: {
-//             user: process.env.EMAIL_USER,
-//             pass: process.env.EMAIL_PASS,
-//         },
-//     });
-
-//     const mailOptions = {
-//         from: process.env.EMAIL_USER,
-//         to: clientEmail,
-//         subject: 'Appointment Confirmation - SwineGuard',
-//         text: message,
-//     };
-
-//     try {
-//         const info = await transporter.sendMail(mailOptions);
-//         console.log('Email sent:', info.response);
-//         return true;
-//     } catch (error) {
-//         console.error('Email failed:', error);  // Log the full error
-//         if (error.response) {
-//             console.error('SMTP Error Response:', error.response);  // SMTP error response
-//         }
-//         return false;
-//     }
-// };
-
 exports.sendAppointmentEmail = async (req, res) => {
     const { clientEmail, message } = req.body;
     

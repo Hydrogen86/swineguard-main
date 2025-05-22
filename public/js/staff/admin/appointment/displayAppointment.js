@@ -129,7 +129,7 @@ function renderAppointments(appointmentsToRender) {
           </div>
           <div class="buttons-container">
             <button class="appointment-accept-btn btn">Accept</button>
-            <button class="appointment-confirm-btn btn">Confirm</button>
+            <button class="appointment-confirm-btn btn">Complete</button>
           </div>
         </div>
       </div>
@@ -140,7 +140,15 @@ function renderAppointments(appointmentsToRender) {
   const tableBody = document.querySelector('.manage-appointments-table__tbody');
   if (tableBody) {
     tableBody.innerHTML = appointmentHTML;
+
+    const statusElements = document.querySelectorAll('.td.status');
+
+    statusElements.forEach(el => {
+      const status = el.textContent.trim();
+      updateStatusStyle(el, status);
+    });
   }
+
 
   // Now attach listeners
   const acceptForm = document.querySelector('.appointment-accept-form');
@@ -161,11 +169,9 @@ function renderAppointments(appointmentsToRender) {
 
         acceptForm.style.display = 'block';
       } else if (this.value === 'reschedule') {
-        // alertMsg(appointmentId, 'reschedule', dropdown);// reschedule
         updateAppointments(appointmentId, 'reschedule');
 
       } else if (this.value === 'removed') {
-        // alertMsg(appointmentId, 'removed', dropdown); // removed
         updateAppointments(appointmentId, 'removed');
       }
     });
@@ -239,6 +245,8 @@ function renderAppointments(appointmentsToRender) {
   }
 }
 
+
+
 // Toggle more details
 document.querySelector('.manage-appointments-table').addEventListener('click', e => {
   const btn = e.target.closest('.toggle-more-details-btn');
@@ -272,6 +280,47 @@ if (appointmentFilter) {
     }
   });
 }
+
+
+//Color functions for status
+function updateStatusStyle(statusElement, statusValue) {
+  statusElement.style.backgroundColor = '';
+  statusElement.style.border = '';
+  statusElement.style.color = '';
+
+  switch (statusValue.toLowerCase()) {
+    case 'pending':
+      statusElement.style.backgroundColor = '#fff4cc';
+      statusElement.style.border = '1px solid #c9a100';
+      statusElement.style.color = '#c9a100';
+      break;
+    case 'completed':
+      statusElement.style.backgroundColor = '#d4f5dd';
+      statusElement.style.border = '1px solid #2e8b57';
+      statusElement.style.color = '#2e8b57';
+      break;
+    case 'ongoing':
+      statusElement.style.backgroundColor = '#e6f7ff';
+      statusElement.style.border = '1px solid #007acc';
+      statusElement.style.color = '#007acc';
+      break;
+    case 'reschedule':
+      statusElement.style.backgroundColor = '#ffedd4';
+      statusElement.style.border = '1px solid #ff9100';
+      statusElement.style.color = '#ff9100';
+      break;
+    case 'removed':
+      statusElement.style.backgroundColor = '#ffe6e6';
+      statusElement.style.border = '1px solid #cc0000';
+      statusElement.style.color = '#cc0000';
+      break;
+    default:
+      statusElement.style.backgroundColor = '#eeeeee';
+      statusElement.style.border = '1px solid #ccc';
+      statusElement.style.color = '#333';
+  }
+}
+
 
 
 // BACKEND REQUESTING PART

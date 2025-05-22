@@ -52,7 +52,7 @@
 
       <div class="admin-profile">
         <img class="admin-profile__pic" src="/images-and-icons/images/vet logo.jpg" alt="admin-profile-pic" >
-        <p class="admin-profile__label">ADMIN</p>
+        <p class="admin-profile__label">Appoinment Coordinator</p>
 
         <img class="header__arrow-down-icon" src="/images-and-icons/icons/arrow-down-icon.png" alt="arrow-down-icon" >
 
@@ -81,17 +81,9 @@
             <img class="side-nav__link-icon" src="/images-and-icons/icons/appointment-icon.png" alt="appointments-icon">
             <p class="side-nav__link-label">Appointments</p>
           </li>
-          <li class="side-nav__link" id="users-link">
-            <img class="side-nav__link-icon" src="/images-and-icons/icons/database-icon.png" alt="database-icon">
-            <p class="side-nav__link-label">Users</p>
-          </li>
           <li class="side-nav__link" id="message-link">
             <img class="side-nav__link-icon" src="/images-and-icons/icons/messages-icon.png" alt="message-icon">
             <p class="side-nav__link-label">Messages</p>
-          </li>
-          <li class="side-nav__link" id="inventory-link">
-            <img class="side-nav__link-icon" src="/images-and-icons/icons/inventory-icon.png" alt="inventory-icon">
-            <p class="side-nav__link-label">Inventory</p>
           </li>
           <li class="side-nav__link" id="setting-link">
             <img class="side-nav__link-icon" src="/images-and-icons/icons/setting-icon.png" alt="settings-icon">
@@ -110,20 +102,6 @@
         <!-- Dashboard Section -->
         <section id="dashboard-section" class="dashboard-section">
           <h1 class="section__heading">Manage Dashboards</h1>
-          <div class="dashboard-nav">
-            <div class="population-nav" id="population-nav">
-              <span>Population</span>
-              <img src="/images-and-icons/icons/population.png" alt="population">
-            </div>
-            <div class="types-nav" id="types-nav">
-              <span>Types</span>
-              <img src="/images-and-icons/icons/swine-type.png" alt="population">
-            </div>
-            <div class="appointment-nav" id="appointment-nav">
-              <span>Appointments</span>
-              <img src="/images-and-icons/icons/appointments_nav.png" alt="population">
-            </div>
-          </div>
 
           <div class="dashboard-container">
             <h2>Summary</h2> 
@@ -231,9 +209,27 @@
           <!-- Add Appointments Form-->
           <div class="add-appointment-container" id="add-appointment-container">
             <img class="add-appointment-container__cancel-btn cancel-add-appointment-btn" src="/images-and-icons/icons/cross-icon.png"></img>
-            <h2 class="add-appointment-container__heading">Add Appointment</h2>   
+            <h2 class="add-appointment-container__heading">Add Appointment</h2> 
+
             <!-- form -->   
             <form class="add-appointments-form" id="add-appointments-form">
+              <h3 class="add-appointments-form__heading">Client Information</h3>
+              <!-- fullname, municipality and barangay group -->
+              <div class="group">
+                <input id="full-name" type="text" placeholder="Full name" required>
+                <select id="municipality" name="">
+                  <option value="">Municipality</option>
+                </select>
+                <select id="barangay" name="" disabled>
+                    <option value="">Barangay</option>
+                </select>
+              </div>
+              <!-- email and contact number group -->
+              <div class="group">
+                <input id="client-email" type="text" placeholder="Email">
+                <input id="client-phone" type="tel" maxlength="11" placeholder="Phone" required><br>
+              </div>
+
               <h3 class="add-appointments-form__heading">Swine Information</h3>
               <!-- appointment title, schedule and time group -->
               <div class="group">
@@ -268,22 +264,7 @@
               </div>
               <!-- textarea of swine symptoms message -->
               <textarea class="swine-symptoms"  name="" id="swine-symptoms" placeholder="Write a note or swine symptoms..."></textarea>
-              <h3 class="add-appointments-form__heading">Client Information</h3>
-              <!-- fullname, municipality and barangay group -->
-              <div class="group">
-                <input id="full-name" type="text" placeholder="Full name" required>
-                <select id="municipality" name="">
-                  <option value="">Municipality</option>
-                </select>
-                <select id="barangay" name="" disabled>
-                    <option value="">Barangay</option>
-                </select>
-              </div>
-              <!-- email and contact number group -->
-              <div class="group">
-                <input id="client-email" type="text" placeholder="Email">
-                <input id="client-phone" type="tel" maxlength="11" placeholder="Phone" required><br>
-              </div>
+              
               <button class="submit-appointment-btn" type="submit">Add Appointment</button>
             </form>
           </div>
@@ -537,372 +518,6 @@
           </div>
         </section>
 
-        <!-- Inventory Section -->
-        <section id="inventory-section">
-          <h1 class="section__heading">Inventory</h1>   
-          <ul class="inventory-nav">
-            <li data-value="vaccines-table" class="inventory-nav__link active">Vaccine</li>
-            <li data-value="vitamins-table" class="inventory-nav__link">Vitamnins</li>
-          </ul>
-          <div data-value="vaccines-table" class="inventory-table--vaccines inventory-table"> <!--vaccine-table -->
-            <div class="inventory-vaccine-table__control-panel inventory-table__control-panel"> <!--control panel -->
-              <h1 class="control-panel__table-name">Vaccines</h1>
-              <div class="control-panel__search">
-                <img class="control-panel__search-icon" src="/images-and-icons/icons/search-icon.png" alt="search-icon">
-                <input class="control-panel__search-input" type="text" placeholder="Find a vaccine">   
-              </div>
-              <div class="control-panel__sort">
-                <p class="control-panel__sort-label">Sort by:</p>
-                <select name="select-sort-category" id="select-sort-category" class="control-panel__sort-select-category">
-                  <option value="name">Name</option>
-                  <option value="manufacturer">Manufacturer</option>
-                  <option value="date-of-manufacture">Date of Manufacture</option>
-                  <option value="dose">Dose</option>
-                  <option value="status">Status</option>
-                </select>
-              </div>
-              <div class="control-panel__add-btn">
-                <i class="control-panel__add-vaccine-btn-icon control-panel__add-btn--icon fas fa-plus"></i>
-                <p class="control-panel__add-vaccine-btn-label control-panel__add-btn--label" id="add-vaccine">Add Vaccine</p>
-              </div>              
-            </div>      
-
-            <div class="inventory-vaccine-table__thead inventory-table__thead"> <!-- Table Head -->
-              <div class="th th--item-number">Item no.</div>
-              <div class="th th--name">Name</div>
-              <div class="th th--description">Description</div>
-              <div class="th th--amount">Amount</div>
-              <div class="th th--dose-quantity">Quantity</div>
-              <div class="th th--dose-total">Total(mg)</div>
-              <div class="th th--expiration">Exp Date</div>
-              <div class="th th--stock-status">Stock Status</div>
-              <div class="th th--status">Status</div>
-              <div class="th th--actions"> </div>
-            </div>
-            
-            <div class="inventory-vaccine-table__tbody inventory-table__tbody"> <!-- Table Body -->
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">1665008932</div>
-                <div class="td td--name">Avishi Ferro Organic Iron (Fe)</div>
-                <div class="td td--description">Iron Supplement</div>
-                <div class="td td--amount">600</div>
-                <div class="td td--dose-quantity">35</div>
-                <div class="td td--dose-total">21000 mg</div>
-                <div class="td td--expiration">10 - 23 - 2030</div>
-                <div class="td td--stock-status">In stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">3325008911</div>
-                <div class="td td--name">Lactobacillus</div>
-                <div class="td td--description">Probiotics</div>
-                <div class="td td--amount">100</div>
-                <div class="td td--dose-quantity">350</div>
-                <div class="td td--dose-total">35000 mg</div>
-                <div class="td td--expiration">11 - 11 - 2033</div>
-                <div class="td td--stock-status">In stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">1001008999</div>
-                <div class="td td--name">Noromycin 300 LA</div>
-                <div class="td td--description">Antibiotics</div>
-                <div class="td td--amount">100</div>
-                <div class="td td--dose-quantity">65</div>
-                <div class="td td--dose-total">6500 mg</div>
-                <div class="td td--expiration">12 - 13 - 2029</div>
-                <div class="td td--stock-status">In stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">7895150932</div>
-                <div class="td td--name">Ivermectin</div>
-                <div class="td td--description">Deworming</div>
-                <div class="td td--amount">100</div>
-                <div class="td td--dose-quantity">100</div>
-                <div class="td td--dose-total">10000 mg</div>
-                <div class="td td--expiration">02 - 14 - 2034</div>
-                <div class="td td--stock-status">In stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">1115008111</div>
-                <div class="td td--name">Noromectin</div>
-                <div class="td td--description">Deworming</div>
-                <div class="td td--amount">100</div>
-                <div class="td td--dose-quantity">50</div>
-                <div class="td td--dose-total">5000 mg</div>
-                <div class="td td--expiration">10 - 23 - 2030</div>
-                <div class="td td--stock-status">In stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">2225008999</div>
-                <div class="td td--name">Liquamycin</div>
-                <div class="td td--description">Antibiotics</div>
-                <div class="td td--amount">200</div>
-                <div class="td td--dose-quantity">350</div>
-                <div class="td td--dose-total">70000 mg</div>
-                <div class="td td--expiration">10 - 23 - 2030</div>
-                <div class="td td--stock-status">In stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">1665008932</div>
-                <div class="td td--name">endectocide</div>
-                <div class="td td--description">Anti-Malaria</div>
-                <div class="td td--amount">100</div>
-                <div class="td td--dose-quantity">55</div>
-                <div class="td td--dose-total">5500 mg</div>
-                <div class="td td--expiration">05 - 17 - 2031</div>
-                <div class="td td--stock-status">In stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">8765008111</div>
-                <div class="td td--name">UNAHCO</div>
-                <div class="td td--description">Vitamins</div>
-                <div class="td td--amount">600</div>
-                <div class="td td--dose-quantity">35</div>
-                <div class="td td--dose-total">21000 mg</div>
-                <div class="td td--expiration">10 - 23 - 2030</div>
-                <div class="td td--stock-status">In stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vaccine-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vaccine-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-                       
-          </div>
-
-          <div data-value="vitamins-table" class="inventory-table--vitamins inventory-table"> <!-- vitamins-table -->
-            <div class="inventory-vitamins-table__control-panel inventory-table__control-panel">
-              <h1 class="control-panel__table-name">Vitamins</h1>
-              <div class="control-panel__search">
-                <img class="control-panel__search-icon" src="/images-and-icons/icons/search-icon.png" alt="search-icon">
-                <input class="control-panel__search-input" type="text" placeholder="Find a vitamins">   
-              </div>
-              <div class="control-panel__sort">
-                <p class="control-panel__sort-label">Item No:</p>
-                <select name="select-sort-category" id="select-sort-category" class="control-panel__sort-select-category">
-                  <option value="name">Name</option>
-                  <option value="manufacturer">Description</option>
-                  <option value="date-of-manufacture">Amount</option>
-                  <option value="dose">Quantity</option>
-                  <option value="expiry-date">Expiry Date</option>
-                  <option value="status">Status</option>
-                </select>
-              </div>
-              <div class="control-panel__add-btn">
-                <i class="control-panel__add-vitamins-btn-icon control-panel__add-btn--icon fas fa-plus"></i>
-                <p class="control-panel__add-vitamins-btn-label control-panel__add-btn--label">Add vitamins</p>
-              </div>              
-            </div>      
-            <div class="inventory-vaccine-table__thead inventory-table__thead"> <!-- Table Head -->
-              <div class="th th--item-number">Item no.</div>
-              <div class="th th--name">Name</div>
-              <div class="th th--description">Description</div>
-              <div class="th th--amount">Amount</div>
-              <div class="th th--dose-quantity">Quantity</div>
-              <div class="th th--dose-total">Total(mg)</div>
-              <div class="th th--expiration">Exp Date</div>
-              <div class="th th--stock-status">Stock Status</div>
-              <div class="th th--status">Status</div>
-              <div class="th th--actions"> <!-- Actions --> </div>
-            </div>
-            
-            <div class="inventory-vaccine-table__tbody inventory-table__tbody"> <!-- Table Body -->
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">4084443832</div>
-                <div class="td td--name">Belman Cecical</div>
-                <div class="td td--description">Vatamins & Minerals</div>
-                <div class="td td--amount">200</div>
-                <div class="td td--dose-quantity">135</div>
-                <div class="td td--dose-total">27000 mg</div>
-                <div class="td td--expiration">01 - 01 - 2029</div>
-                <div class="td td--stock-status">In Stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vitamins-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vitamins-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">4084443832</div>
-                <div class="td td--name">Belman Cecical</div>
-                <div class="td td--description">Vatamins & Minerals</div>
-                <div class="td td--amount">200</div>
-                <div class="td td--dose-quantity">135</div>
-                <div class="td td--dose-total">27000 mg</div>
-                <div class="td td--expiration">01 - 01 - 2029</div>
-                <div class="td td--stock-status">In Stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vitamins-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vitamins-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">4084443832</div>
-                <div class="td td--name">Belman Cecical</div>
-                <div class="td td--description">Vatamins & Minerals</div>
-                <div class="td td--amount">200</div>
-                <div class="td td--dose-quantity">135</div>
-                <div class="td td--dose-total">27000 mg</div>
-                <div class="td td--expiration">01 - 01 - 2029</div>
-                <div class="td td--stock-status">In Stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vitamins-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vitamins-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">4084443832</div>
-                <div class="td td--name">Belman Cecical</div>
-                <div class="td td--description">Vatamins & Minerals</div>
-                <div class="td td--amount">200</div>
-                <div class="td td--dose-quantity">135</div>
-                <div class="td td--dose-total">27000 mg</div>
-                <div class="td td--expiration">01 - 01 - 2029</div>
-                <div class="td td--stock-status">In Stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vitamins-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vitamins-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-              <div class="vaccine table-body__table-row">
-                <div class="td td--item-number">4084443832</div>
-                <div class="td td--name">Belman Cecical</div>
-                <div class="td td--description">Vatamins & Minerals</div>
-                <div class="td td--amount">200</div>
-                <div class="td td--dose-quantity">135</div>
-                <div class="td td--dose-total">27000 mg</div>
-                <div class="td td--expiration">01 - 01 - 2029</div>
-                <div class="td td--stock-status">In Stock</div>
-                <div class="td td--status">Active</div>
-                <div class="td td--actions">
-                  <i class="actions__show-buttons-icon fas fa-ellipsis-v"></i>
-                  <div class="buttons-container">
-                    <button class="buttons-container__edit-btn edit-vitamins-btn">Edit</button>
-                    <button class="buttons-container__delete-btn delete-vitamins-btn">Delete</button>
-                  </div>
-                </div>
-              </div>
-            </div>               
-          </div>
-
-          <!-- Add Inventory -->
-          <!-- Overlay for backdrop -->
-          <div id="popup-overlay"></div>
-
-          <!-- Inventory Form Popup -->
-          <form id="inventory-popup">
-            <h2 class="popup-heading">Add Item</h2>
-            <!-- <input type="hidden" id="appointmentID" data-appointment-id=""> -->
-            <div class="popup-columns">
-              <div class="column-left">
-                <label for="item-name">Item Name</label>
-                <input type="text" id="item-name" required>
-                
-                <label for="stock-amount">Amount (mg)</label>
-                <input type="number" min="0" id="stock-amount" required>
-                
-                <label for="quantity">Quantity</label>
-                <input type="number" min="0" id="quantity" required>
-              </div>
-              <div class="column-right">
-                <label for="expiry-date">Expiry Date</label>
-                <input type="date" id="expiry-date" required>
-                
-                <label for="inventory-type">Select Medicine</label>
-                <select id="inventory-type">
-                  <option value="">Description</option>
-                  <option value="Deworming">Deworming</option>
-                  <option value="Iron Supplement">Iron Supplement</option>
-                  <option value="Anti Malaria">Anti Malaria</option>
-                  <option value="Antibiotics">Antibiotics</option>
-                  <option value="Probiotics">Probiotics</option>
-                  <option value="Vitamins">Vitamins</option>
-                  <option value="Parasiticides">Parasiticides</option>
-                  <option value="Sedatives & Analgesics">Sedatives & Analgesics</option>
-                </select>
-              </div>
-            </div>
-            <div class="popup-buttons">
-              <button class="inventory-save-btn" type="submit">Save</button>
-              <button class="inventory-cancel-btn" type="button" id="Inventory-cancelBtn">Cancel</button>
-            </div>
-          </form>
-
-        </section>
 
 
         <!-- Setting section -->
@@ -964,14 +579,13 @@
       </div>
     </main>
 
-    <script src="/js/staff/admin/sideNav.js"></script>
+    <script src="/js/staff/AC_staff/sideNav.js"></script>
     <script src="/js/staff/admin/schedule.js"></script>
     <script src="/js/staff/admin/dashboard/dashboardChart.js"></script>
     <!-- <script src="/js/dashboard/population.js"></script> -->
     <script src="/js/staff/admin/message.js"></script>
     <script src="/js/staff/admin/schedule.js"></script>
 
-    <script src="/js/staff/admin/inventory/add_Item.js"></script>
 
     <script src="/js/staff/admin/adminlogin.js"></script>
     <script src="/js/staff/admin/displayAdminDetails.js"></script>
