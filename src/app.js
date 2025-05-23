@@ -40,10 +40,10 @@ app.get('/client/homepage', verifyToken, (req, res) => {
 })
 
 // 📦 API Routes
-app.use('/api', require('./routes/appointmentRoutes'));
-app.use('/api', require('./routes/inventoryRoutes'));
-app.use('/api', require('./routes/emailRoutes'));
-app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api', require('./routes/admin/appointmentRoutes'));
+app.use('/api', require('./routes/admin/inventoryRoutes'));
+app.use('/api', require('./routes/admin/emailRoutes'));
+app.use('/api/admin', require('./routes/admin/adminRoutes'));
 
 //users
 app.use('/api', require('./routes/client/clientRoutes'));

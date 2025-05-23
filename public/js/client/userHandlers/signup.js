@@ -1,3 +1,4 @@
+
 //Divs
 const userInfo= document.querySelector('.user-info');
 const userContact = document.querySelector('.user-contact');
@@ -72,6 +73,11 @@ nextBtns.forEach((btn, index) => {
                 showAlert('Required', 'Incorrect Password', 'warning');
                 return;
             }
+            // Check the length of the password
+            if (inputs[1].value.length < 6) {
+                showAlert('Required', 'Password is too short', 'warning');
+                return;
+            }
 
             userEmailAcc.style.display = 'none';
             userAgreement.style.display = 'block';
@@ -111,25 +117,110 @@ function showAlert(title, message, icon) {
     });
 }
 
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Prevent default form submission
 
-//SUbmit User Details:
-async function signUpClient() {
+    // await signUpClient();
     try {
         const clientData = {
-            firstName: document.getElementById('fname'),
-            middleName: document.getElementById('mname'),
-            lastName: document.getElementById('lname'),
-            suffix: document.getElementById('suffix'),
+            firstName: document.getElementById('fname').value,
+            middleName: document.getElementById('mname').value,
+            lastName: document.getElementById('lname').value,
+            suffix: document.getElementById('suffix').value,
             gender: document.querySelector('input[name="gender"]:checked')?.value || null,
 
-            contact: document.getElementById('phone'),
-            barangay: document.getElementById('barangay'),
-            municipality: document.getElementById('municipality'),
-            email: document.getElementById('user-email'),
-            password: document.getElementById('user-password')
+            contact: document.getElementById('phone').value,
+            barangay: document.getElementById('barangay').value,
+            municipality: document.getElementById('municipality').value,
+            email: document.getElementById('user-email').value,
+            password: document.getElementById('user-password').value
         }
-    }
-    catch {
+
+        const response = await axios.post('http://localhost:5000/api/signup', clientData);
+        
+        const data = response.data;
+        localStorage.setItem('token', data.token);
+
+        if (response.status === 201) {
+
+            Swal.fire({
+                title: 'Success!',
+                text: 'Account created successfully',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1200
+            });
+
+            // 🔁 Redirect after 1.5s
+            setTimeout(() => {
+                window.location.href = '/client/homepage';
+            }, 1500);
+        } else {
+            showAlert("Error", "Something went wrong", "error");
+        }
 
     }
+    catch (err) {
+        console.error(err);
+        // Check if the error is from the server (e.g. validation error, duplicate email, etc.)
+        if (err.response && err.response.status === 400) {
+            showAlert("Error", err.response.data.error || "Invalid data", "error");
+
+            // Highlight email input
+            const userEmailTxtBox = document.getElementById('user-email');
+            userEmailTxtBox.style.borderColor = '#d94a4a';
+            userEmailTxtBox.style.color = '#c72a2a';
+
+            // Show the email step again
+            userAgreement.style.display = 'none';
+            userEmailAcc.style.display = 'block';
+        } else {
+            showAlert('Error', 'Creating account failed', 'error');
+        }
+    }
+});
+
+const municipalitySelect = document.getElementById('municipality');
+const barangaySelect = document.getElementById('barangay');
+let barangayData = {};
+
+async function loadAddressData() {
+    try {
+        const res = await axios.get('http://localhost:5000/api/addresses');
+        const municipals = res.data.Municipals;
+
+        // Store for barangay reference
+        barangayData = municipals;
+
+        // Clear and populate municipality dropdown
+        municipalitySelect.innerHTML = '<option value="">Select Municipality</option>';
+        Object.keys(municipals).forEach(municipality => {
+            const option = document.createElement('option');
+            option.value = municipality;
+            option.textContent = municipality;
+            municipalitySelect.appendChild(option);
+        });
+
+        // Listen for municipality change
+        municipalitySelect.addEventListener('change', () => {
+            const selected = municipalitySelect.value;
+            barangaySelect.disabled = false;
+            barangaySelect.innerHTML = '<option value="">Select Barangay</option>';
+
+            if (barangayData[selected]) {
+                barangayData[selected].forEach(barangay => {
+                    const option = document.createElement('option');
+                    option.value = barangay;
+                    option.textContent = barangay;
+                    barangaySelect.appendChild(option);
+                });
+            }
+        });
+
+    } catch (error) {
+        console.error('Failed to load address data:', error);
+    }
 }
+
+loadAddressData();
+

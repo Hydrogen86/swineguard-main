@@ -5,6 +5,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
+//Client Login
 exports.clientLogin = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -59,10 +60,107 @@ exports.clientLogin = async (req, res) => {
         console.log('User role from DB:', user.role);
         res.status(500).json({ error: 'Server error' });
     }
-    };
+}
+
+//Logput
+exports.logout = (req, res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+    });
+    res.status(200).json({ message: 'Logged out successfully' });
+};
+
+//Create User Account
+exports.createUserAccount = async (req, res) => {
+    try {
+        const { firstName, middleName, lastName, suffix, contact, barangay, municipality, email, password } = req.body;
+
+        // Validate required string fields with min length
+        const requiredFields = [
+            { field: 'firstName', label: 'First name', min: 2 },
+            { field: 'lastName', label: 'Last name', min: 2 },
+            { field: 'contact', label: 'Contact number', min: 11 },
+            { field: 'barangay', label: 'Barangay', min: 1 },
+            { field: 'municipality', label: 'Municipality', min: 1 },
+        ];
+
+        for (const { field, label, min } of requiredFields) {
+            if (!req.body[field] || req.body[field].length < min) {
+                return res.status(400).json({
+                    message: `${label} is required and must be at least ${min} character${min > 1 ? 's' : ''}.`,
+                });
+            }
+        }
+
+        if (!email || !/\S+@\S+\.\S+/.test(email)) {
+            return res.status(400).json({ message: 'Valid email is required.' });
+        }
+        if (!password || password.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
+        }
+
+        const existingEmail = await User.findOne({ email });
+        if (existingEmail) {
+            return res.status(400).json({ error: 'Failed, Email already exists' });
+        }
+
+        // ✅ Hash password before creating user
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const user = new User({
+            firstName,
+            middleName,
+            lastName,
+            suffix,
+            contact,
+            barangay,
+            municipality,
+            email,
+            password: hashedPassword
+        });
+
+        await user.save();
+
+        if (!process.env.JWT_SECRET) {
+            return res.status(500).json({ error: 'Server error: JWT_SECRET is missing' });
+        }
+
+        const token = jwt.sign(
+            { userId: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 3600000,
+        });
+
+        res.status(201).json({
+            message: 'Account created successfully',
+            token,
+            user: {
+                id: user._id,
+                fullName: `${user.firstName} ${user.middleName} ${user.lastName}`,
+                address: `${user.barangay} ${user.municipality}`,
+                contact: user.contact,
+                email: user.email,
+                role: user.role
+            }
+        });
+    } catch (err) {
+        console.error('Signup Error:', err);
+        res.status(500).json({ error: err.message });
+    }
+}
+
 
 //get User data
-exports.getuserData = async (req, res) => {
+exports.getClientData = async (req, res) => {
     try {
         
         const userData = await User.findById(req.user.userId);
@@ -92,61 +190,3 @@ exports.getuserData = async (req, res) => {
     }
 }
 
-//Create User Account
-exports.createUserAccount = async (req, res) => {
-    try {
-        const { firstName, middleName, lastName, suffix, contact, barangay, municipality, email, password, } = req.body;
-
-        // Validate required string fields with min length
-        const requiredFields = [
-        { field: 'firstName', label: 'First name', min: 2 },
-        { field: 'lastName', label: 'Last name', min: 2 },
-        { field: 'contact', label: 'Contact number', min: 11 },
-        { field: 'barangay', label: 'Barangay', min: 1 },
-        { field: 'municipality', label: 'Municipality', min: 1 },
-        ];
-
-        for (const { field, label, min } of requiredFields) {
-        if (!req.body[field] || req.body[field].length < min) {
-            return res.status(400).json({
-            message: `${label} is required and must be at least ${min} character${min > 1 ? 's' : ''}.`,
-            });
-        }
-        }
-
-        // Custom checks
-        if (!email || !/\S+@\S+\.\S+/.test(email)) {
-        return res.status(400).json({ message: 'Valid email is required.' });
-        }
-        if (!password || password.length < 6) {
-        return res.status(400).json({ message: 'Password must be at least 6 characters long.' });
-        }
-
-        // ✅ Check if user with same email already exists
-        const existingEmail = await User.findOne({ email });
-        if (existingEmail) {
-            return res.status(400).json({ message: 'Email already in use.' });
-        }
-
-        // ✅ Hashing password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        const userAccountDetails = new User({
-            firstName,
-            middleName,
-            lastName,
-            suffix,
-
-            contact,
-            barangay,
-            municipality,
-            email,
-            password: hashedPassword,
-        });
-        await userAccountDetails.save();
-        res.status(201).json({message: 'Account created successfully'});
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-}

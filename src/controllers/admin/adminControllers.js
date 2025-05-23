@@ -1,4 +1,4 @@
-const User = require('../models/user');
+const User = require('../../models/user');
 // console.log('JWT_SECRET:', process.env.JWT_SECRET); //display my secret key
 
 const express = require('express');

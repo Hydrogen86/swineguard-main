@@ -26,10 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (result.isConfirmed) {
                     localStorage.removeItem('token');
                     Swal.fire('Logged out!', 'You have been logged out.', 'success').then(() => {
-                        window.location.href = '/adminLoginPage.html';
+                        // window.location.href = '/adminLoginPage.html';
+                        window.location.replace('/adminLoginPage.html');
                     });
                 }
             });
+            
         });
     }
 });

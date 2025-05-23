@@ -1,11 +1,10 @@
 
 const appointmentRequest = require('@models/appointment');
-const express = require('express');
-const addresses = require('../../data/addresses.json'); //addresses from json file
-const services = require('../../data/services.json'); //services from json file
-const swines = require('../../data/swines.json'); //swine type from json file
-const medicines = require('../../data/medicine.json'); //swine meds from json file
-const vetPersonnel = require('../../data/vetPersonnel.json'); //vet personnel from json file
+const addresses = require('../../../data/addresses.json'); //addresses from json file
+const services = require('../../../data/services.json'); //services from json file
+const swines = require('../../../data/swines.json'); //swine type from json file
+const medicines = require('../../../data/medicine.json'); //swine meds from json file
+const vetPersonnel = require('../../../data/vetPersonnel.json'); //vet personnel from json file
 
 //Add Apointments
 exports.addAppointment = async (req, res) => {
