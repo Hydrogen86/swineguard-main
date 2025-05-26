@@ -66,7 +66,7 @@ fetch('http://localhost:5000/api/appointments')
       series: [Mogpog, Boac, Gasan, Buenavista, StaCruz, Torrijos],
       chart: {
         width: 600,
-        type: 'pie',
+        type: 'donut',
         toolbar: { show: true }
       },
       labels: [municipalityList[0], municipalityList[1], municipalityList[2], municipalityList[3], municipalityList[4], municipalityList[5],],

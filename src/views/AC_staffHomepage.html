@@ -101,10 +101,9 @@
 
         <!-- Dashboard Section -->
         <section id="dashboard-section" class="dashboard-section">
-          <h1 class="section__heading">Manage Dashboards</h1>
+          <h1 class="section__heading">Dashboards</h1>
 
           <div class="dashboard-container">
-            <h2>Summary</h2> 
 
             <div class="innerDashboard-container">
               <!-- Left Chart -->
@@ -172,7 +171,7 @@
 
         <!-- Schedule Section -->
         <section id="schedule-section" class="schedule-section">
-          <h1 class="section__heading">Manage Schedules</h1>
+          <h1 class="section__heading">Schedules</h1>
           <div id="calendar"></div>
 
           <!-- Popup modal -->
@@ -188,11 +187,13 @@
 
         <!-- Appointment Section -->
         <section id="appointments-section" class="appointment-section">
-          <h1 class="section__heading">Manage Appointments</h1>
-          <form class="header__search">
+          <h1 class="section__heading">Appointments</h1>
+          <form class="header__search" id="search-box">
             <img class="header__search-icon" src="/images-and-icons/icons/search-icon.png" alt="search-icon"></img>
             <input class="header__search-input" type="text" placeholder="Search...">   
+            <button id="add-appointment-btn">Add</button>
           </form>
+
           <!-- filter-appointment and add appointments buttons -->
           <div class="select-and-btn-container">
             <select class="select-and-btn-container__filter-apointments-status" name="appointment-filter" id="appointment-filter">
@@ -203,7 +204,7 @@
               <option value="pending">Pending</option>
               <option value="removed">Archive</option>
             </select>
-            <button class="select-and-btn-container__add-appointment-btn add-appointment-btn">Add Appointment</button>
+            <button class="select-and-btn-container__add-appointment-btn check-schedule-btn">Check Schedule</button>
           </div>
 
           <!-- Add Appointments Form-->
@@ -323,8 +324,6 @@
         <div class="modal-overlay hide" id="modal-overlay"></div>
 
         </section>
-
-        <section id="database-section">No Content</section>
 
         <!-- Message Section -->
         <section id="messages-section">
@@ -589,6 +588,9 @@
 
     <script src="/js/staff/admin/adminlogin.js"></script>
     <script src="/js/staff/admin/displayAdminDetails.js"></script>
+
+    <script src="/js/staff/AC_staff/searchHandler.js"></script>
+
     <script src="/js/staff/admin/appointment/displayAppointment.js"></script>
     <script src="/js/staff/admin/appointment/updateAppointment.js"></script>
     <script src="/js/staff/admin/appointment/data.js"></script>

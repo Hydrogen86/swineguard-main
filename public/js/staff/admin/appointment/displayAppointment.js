@@ -1,15 +1,39 @@
-let allAppointments = [];
+// let allAppointments = [];
 
 // Fetch the appointment data from the API
-fetch('http://localhost:5000/api/appointments')
-  .then(response => response.json())
-  .then(appointments => {
-    allAppointments = appointments;
-    renderAppointments(allAppointments);
-  })
-  .catch(error => {
-    console.error('Error fetching appointments:', error);
-  });
+// fetch('http://localhost:5000/api/appointments')
+//   .then(response => response.json())
+//   .then(appointments => {
+//     allAppointments = appointments;
+//     renderAppointments(allAppointments);
+//   })
+//   .catch(error => {
+//     console.error('Error fetching appointments:', error);
+//   });
+
+let allAppointments = [];
+
+async function fetchAppointments() {
+  
+  try {
+
+    const response = await axios.get('http://localhost:5000/api/appointments');
+
+    const data = response.data;
+
+    if (response.status === 200) {
+      allAppointments = data;
+      renderAppointments(data);
+    } else {
+      console.log ('Failed to load appointments');
+    }
+
+  } catch (error) {
+    console.error('Error fetching appointmet details:', error);
+  }
+
+}
+
 
 // Function to convert 24-hour time format to 12-hour format with AM/PM
 function formatTimeWithAMPM(time) {
@@ -121,7 +145,7 @@ function renderAppointments(appointmentsToRender) {
                 <span class="column__detail-label">Personnel:</span>
                 <span class="column__detail-value">${appointment.vetPersonnel}</span>
               </p>
-              <p class="column__detail">
+              <p class="column__detail vet-message">
                 <span class="column__detail-label">Message:</span>
                 <span class="column__detail-value">${appointment.vetMessage}</span>
               </p>
@@ -326,7 +350,7 @@ function updateStatusStyle(statusElement, statusValue) {
 // BACKEND REQUESTING PART
 
 // Delete appointment
-function deleteAppointment(appointmentId) {
+async function deleteAppointment(appointmentId) {
   Swal.fire({
     title: 'Are you sure?',
     text: "Do you really want to delete this appointment?",
@@ -338,27 +362,26 @@ function deleteAppointment(appointmentId) {
   }).then((result) => {
     if (result.isConfirmed) {
       // User confirmed deletion
-      fetch(`http://localhost:5000/api/appointments/${appointmentId}`, {
-        method: 'DELETE'
-      })
-      .then(res => res.json())
-      .then(data => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Appointment Deleted',
-          text: 'Appointment deleted successfully!',
-        }).then(() => {
-          window.location.reload();
+
+      axios.delete(`http://localhost:5000/api/appointments/${appointmentId}`)
+        .then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Appointment Deleted',
+            text: 'Appointment deleted successfully!',
+          }).then(() => {
+            window.location.reload();
+          });
+        })
+        .catch(err => {
+          console.error('Delete error:', err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Something went wrong while deleting the appointment.',
+          });
         });
-      })
-      .catch(err => {
-        console.error('Delete error:', err);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Something went wrong while deleting the appointment.',
-        });
-      });
+
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       Swal.fire({
         title: 'Cancelled',
@@ -370,7 +393,7 @@ function deleteAppointment(appointmentId) {
 }
 
 // //Reschedule, Complete, Restore and Remove appointments
-function updateAppointments(appointmentId, action, element) {
+async function updateAppointments(appointmentId, action, element) {
 
   const endpointMap = {
         completed: 'completed',
@@ -419,6 +442,7 @@ function updateAppointments(appointmentId, action, element) {
           text: `Something went wrong while ${action} the appointment.`,
         });
       });
+
     } else if (result.dismiss === Swal.DismissReason.cancel) {
       // Only reset dropdowns
       if (element && element.tagName === 'element') {
@@ -433,4 +457,4 @@ function updateAppointments(appointmentId, action, element) {
   });
 }
 
-
+window.addEventListener('DOMContentLoaded', fetchAppointments);

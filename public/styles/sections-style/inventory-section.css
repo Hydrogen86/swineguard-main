@@ -1,5 +1,6 @@
 #inventory-section{
   display: block;
+  overflow: hidden;
 }
 
 .section__heading{

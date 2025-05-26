@@ -7,6 +7,9 @@ header{
   padding: 0 2.5rem;
   overflow: hidden;
   color: white;
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
 }
 .head-separate {
   display: flex;
@@ -78,6 +81,21 @@ header{
   border: none;
   padding-left: 1rem;
   color: #5D5D5D;
+}
+
+.header__search button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -25%;
+  height: 100%;
+  width: 80px;
+  background-color: #2FC375;
+  color: white;
+  font-weight: 600;
+  border: 1px solid #0F7E43;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
 .header__search-input::placeholder{

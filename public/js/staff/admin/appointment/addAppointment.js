@@ -37,10 +37,17 @@ fetch('http://localhost:5000/api/addresses')
 // Open and Close addAppointment
 const addAppointmentContainer = document.querySelector('.add-appointment-container');
 
-document.querySelector('.add-appointment-btn').
+document.getElementById('add-appointment-btn').
   addEventListener('click', () => {
     addAppointmentContainer.style.display = 'block';
     document.getElementById('modal-overlay').style.display = 'block';
+  });
+
+document.querySelector('.check-schedule-btn').
+  addEventListener('click', () => {
+    //go to schedule section
+    document.getElementById('schedule-section').style.display = 'block';
+    document.getElementById('appointments-section').style.display = 'none';
   });
   
 document.querySelector('.cancel-add-appointment-btn').
